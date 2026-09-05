@@ -24,8 +24,6 @@ This project is built on **Next.js 14 (App Router)** and connects to **MongoDB A
 
 3. **Configure Environment Variables**:
    Under **Environment Variables**, add:
-   - **Key**: `MONGODB_URI`
-   - **Value**: `mongodb+srv://akashsharma20150_db_user:zkW6gSsXxhhm88OA@cluster0.fw5l5ab.mongodb.net/marinametrics?retryWrites=true&w=majority`
 
 4. **Deploy**:
    - Click **Deploy**.
