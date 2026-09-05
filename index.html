@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MarineMetrics | Autonomous Ocean Intelligence & Telemetry Platform</title>
+  <meta name="description" content="MarineMetrics - AI & IoT-powered ocean health intelligence, real-time coastal telemetry, illegal fishing prevention, and microplastic tracking. Created by Team Sea & Syntax for Smart India Hackathon.">
+  <meta name="keywords" content="MarineMetrics, Sea & Syntax, SIH, Ocean Telemetry, Marine AI, Coastal Monitoring, Smart India Hackathon">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%23050c18' stroke='%2300f0ff' stroke-width='6'/><path d='M25 55 Q 38 35, 50 55 T 75 55' fill='none' stroke='%2300ffaa' stroke-width='7' stroke-linecap='round'/></svg>">
+  
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Dynamic Bioluminescent Canvas Background -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Navigation Bar -->
+  <header class="navbar" id="navbar">
+    <div class="container">
+      <a href="#hero" class="brand-logo" id="brandLogo">
+        <div class="brand-icon-wrap">
+          <svg viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+        </div>
+        <div class="brand-text-block">
+          <span class="brand-name">MarineMetrics</span>
+          <span class="brand-team-tag">by Team Sea &amp; Syntax</span>
+        </div>
+      </a>
+
+      <nav>
+        <ul class="nav-menu" id="navMenu">
+          <li><a href="#hero" class="nav-link active">Home</a></li>
+          <li><a href="#problem" class="nav-link">Problem Statement</a></li>
+          <li><a href="#solution" class="nav-link">Provided Solution</a></li>
+          <li><a href="#how-it-works" class="nav-link">How It Works</a></li>
+          <li><a href="#team" class="nav-link">Team</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <div class="sih-badge">
+          <span>🇮🇳 SIH 2024</span>
+        </div>
+        <button class="nav-cta-btn" id="navLaunchBtn">Mission Control</button>
+      </div>
+
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation">
+        ☰
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- =========================================================
+         HERO SECTION
+         ========================================================= -->
+    <section class="hero-section" id="hero">
+      <div class="container">
+        <div class="hero-grid">
+          <div class="hero-content">
+            <div class="hero-sih-pill">
+              <span class="glow-tag">SIH INITIATIVE</span>
+              <span>Next-Gen Coastal Defense &amp; Ocean Health Analytics</span>
+            </div>
+
+            <h1 class="hero-title">
+              Autonomous Ocean Intelligence &amp; <br>
+              <span class="gradient-text">Real-Time Coastal Telemetry</span>
+            </h1>
+
+            <p class="hero-desc">
+              MarineMetrics bridges orbital satellite feeds, edge-AI sensor buoys, and predictive ocean acoustics to monitor illegal fishing, detect chemical runoff, and protect 7,500+ km of Indian coastline in real-time.
+            </p>
+
+            <!-- Large START button & Secondary CTA -->
+            <div class="hero-cta-group">
+              <button class="btn-start-hero" id="startBtn">
+                <span class="icon-sonar">
+                  <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" stroke="none"/>
+                    <polygon points="10 8 16 12 10 16 10 8" fill="#020813"/>
+                  </svg>
+                </span>
+                <span>START</span>
+              </button>
+
+              <a href="#how-it-works" class="btn-secondary-hero" id="exploreArchBtn">
+                <span>Explore Architecture</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </a>
+            </div>
+
+            <!-- Live Telemetry Mini Stats -->
+            <div class="hero-live-stats">
+              <div class="hero-stat-pill">
+                <span class="icon">🛰️</span>
+                <div>
+                  <div class="val">7,516 km</div>
+                  <div class="label">Coastline Coverage</div>
+                </div>
+              </div>
+              <div class="hero-stat-pill">
+                <span class="icon">🌊</span>
+                <div>
+                  <div class="val" id="heroBuoyCount">1,420+</div>
+                  <div class="label">Active Buoy Nodes</div>
+                </div>
+              </div>
+              <div class="hero-stat-pill">
+                <span class="icon">⚡</span>
+                <div>
+                  <div class="val">&lt; 380 ms</div>
+                  <div class="label">Telemetry Latency</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hero Visual Showcase -->
+          <div class="hero-visual-card">
+            <img src="./assets/hero_marine_telemetry.jpg" alt="MarineMetrics High-Tech Ocean Telemetry Platform" class="hero-img" id="heroGraphic">
+            <div class="hero-card-overlay"></div>
+
+            <!-- Floating Dynamic HUD Elements -->
+            <div class="hud-badge top-left">
+              <span class="hud-status-dot"></span>
+              <span>BUOY #07: ARABIAN SEA LIVE</span>
+            </div>
+
+            <div class="hud-badge bottom-right">
+              <span style="color: var(--neon-cyan);">DO: 6.8 mg/L</span>
+              <span style="color: var(--neon-emerald); margin-left: 8px;">• SST: 28.4°C</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         PROBLEM STATEMENT SECTION
+         ========================================================= -->
+    <section class="problem-section" id="problem">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">
+            <span class="pulse-dot" style="background: var(--neon-alert); box-shadow: 0 0 8px var(--neon-alert);"></span>
+            <span>The Coastal Challenge</span>
+          </div>
+          <h2 class="section-title">
+            The Critical Ocean Crisis Facing Our <span class="gradient-text">Maritime Borders</span>
+          </h2>
+          <p class="section-subtitle">
+            Traditional oceanic monitoring relies on delayed manual sampling, disconnected maritime databases, and fragmented surveillance, leaving millions of square kilometers vulnerable.
+          </p>
+        </div>
+
+        <div class="problem-grid">
+          <!-- Problem 1 -->
+          <div class="problem-card">
+            <div class="problem-icon-wrap">
+              <svg viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+              </svg>
+            </div>
+            <div class="problem-stat-callout">
+              &gt; 48 Hrs <span>Data Delay</span>
+            </div>
+            <h3 class="problem-title">Severe Data Latency &amp; Silos</h3>
+            <p class="problem-text">
+              Coastal research institutions and maritime defense operate on isolated data repositories. Crucial environmental telemetry arrives too late to neutralize chemical spills or ecosystem collapses.
+            </p>
+          </div>
+
+          <!-- Problem 2 -->
+          <div class="problem-card">
+            <div class="problem-icon-wrap">
+              <svg viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+              </svg>
+            </div>
+            <div class="problem-stat-callout">
+              14M+ Tons <span>Microplastics / Yr</span>
+            </div>
+            <h3 class="problem-title">Invisible Microplastic &amp; Toxic Plumes</h3>
+            <p class="problem-text">
+              Plastics and industrial effluents disperse rapidly along deep currents without continuous tracking, destroying coral reef nurseries and contaminating commercial seafood supply chains.
+            </p>
+          </div>
+
+          <!-- Problem 3 -->
+          <div class="problem-card">
+            <div class="problem-icon-wrap">
+              <svg viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/>
+              </svg>
+            </div>
+            <div class="problem-stat-callout">
+              34% Fleet <span>Going 'Dark'</span>
+            </div>
+            <h3 class="problem-title">IUU Fishing &amp; AIS Transponder Spoofing</h3>
+            <p class="problem-text">
+              Illegal, Unreported, and Unregulated (IUU) fishing vessels intentionally disable AIS tracking beacons inside restricted Indian Exclusive Economic Zones (EEZ), eluding maritime patrol.
+            </p>
+          </div>
+
+          <!-- Problem 4 -->
+          <div class="problem-card">
+            <div class="problem-icon-wrap">
+              <svg viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+              </svg>
+            </div>
+            <div class="problem-stat-callout">
+              -2.1 mg/L <span>Hypoxia Drops</span>
+            </div>
+            <h3 class="problem-title">Coral Bleaching &amp; Marine Hypoxia</h3>
+            <p class="problem-text">
+              Global marine heatwaves generate sudden deep-sea "dead zones" where dissolved oxygen plummets. Coastal aquaculture suffers catastrophic financial loss without early predictive warnings.
+            </p>
+          </div>
+        </div>
+
+        <!-- Problem Highlight Banner -->
+        <div class="problem-banner">
+          <div class="problem-banner-text">
+            <h4>Urgent Need for High-Frequency Coastal Telemetry</h4>
+            <p>
+              Smart India Hackathon challenges teams to engineer an automated, scalable ecosystem uniting satellite intelligence and IoT hardware to safeguard India's maritime sovereign resources.
+            </p>
+          </div>
+          <div class="problem-badge-critical">
+            <span>🚨 HIGH CONSERVATION PRIORITY</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         PROVIDED SOLUTION SECTION
+         ========================================================= -->
+    <section class="solution-section" id="solution">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">
+            <span class="pulse-dot"></span>
+            <span>The MarineMetrics Breakthrough</span>
+          </div>
+          <h2 class="section-title">
+            Our Provided Solution: An <span class="gradient-text">Integrated Ocean Sentinel</span>
+          </h2>
+          <p class="section-subtitle">
+            MarineMetrics combines low-cost solar-powered buoy mesh networks with edge-AI anomaly detection and synthetic aperture radar (SAR) to deliver instant, actionable ocean intelligence.
+          </p>
+        </div>
+
+        <!-- Solution 4 Pillar Grid -->
+        <div class="solution-grid">
+          <!-- Pillar 1 -->
+          <div class="solution-card">
+            <div class="solution-icon-wrap">
+              <svg viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/>
+              </svg>
+            </div>
+            <h3>Smart IoT Buoy Mesh Network</h3>
+            <p>
+              Multiparametric sub-surface sensor arrays stream continuous pH, dissolved oxygen, salinity, turbidity, and sea surface temperature with sub-second transmission via LoRaWAN and satellite downlink.
+            </p>
+            <div class="solution-tags">
+              <span class="solution-tag-pill">LoRaWAN + Iridium</span>
+              <span class="solution-tag-pill">Solar Harvested</span>
+              <span class="solution-tag-pill">IP68 Enclosure</span>
+            </div>
+          </div>
+
+          <!-- Pillar 2 -->
+          <div class="solution-card">
+            <div class="solution-icon-wrap">
+              <svg viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+              </svg>
+            </div>
+            <h3>Orbital Computer Vision &amp; SAR</h3>
+            <p>
+              Deep learning models process Sentinel-1 SAR and Sentinel-2 multispectral imagery to map microplastic vortexes, detect dark vessels turning off AIS beacons, and trace offshore petroleum spills.
+            </p>
+            <div class="solution-tags">
+              <span class="solution-tag-pill">YOLO-OceanVision</span>
+              <span class="solution-tag-pill">Dark Vessel AIS Track</span>
+              <span class="solution-tag-pill">Oil Slick Radar</span>
+            </div>
+          </div>
+
+          <!-- Pillar 3 -->
+          <div class="solution-card">
+            <div class="solution-icon-wrap">
+              <svg viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"/>
+              </svg>
+            </div>
+            <h3>Predictive Marine Health Index (MHI)</h3>
+            <p>
+              Proprietary temporal forecasting algorithms simulate 72-hour coastal vulnerability, giving coastal aquaculture farmers and forest departments early warning before algal blooms trigger mass die-offs.
+            </p>
+            <div class="solution-tags">
+              <span class="solution-tag-pill">LSTM Time-Series</span>
+              <span class="solution-tag-pill">Hypoxia Forecast</span>
+              <span class="solution-tag-pill">MHI Scoring</span>
+            </div>
+          </div>
+
+          <!-- Pillar 4 -->
+          <div class="solution-card">
+            <div class="solution-icon-wrap">
+              <svg viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+              </svg>
+            </div>
+            <h3>Rapid Incident Response Dispatch</h3>
+            <p>
+              Automated escalation engine pushes geo-fenced alert packets to the Indian Coast Guard, state fisheries, and marine sanctuaries via secure WebSockets, emergency SMS, and public REST APIs.
+            </p>
+            <div class="solution-tags">
+              <span class="solution-tag-pill">Geo-Fenced Triggers</span>
+              <span class="solution-tag-pill">WebSocket Stream</span>
+              <span class="solution-tag-pill">RESTful API</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Solution Explorer Tabs -->
+        <div class="solution-interactive-box">
+          <div class="sol-tabs-header">
+            <button class="sol-tab-btn active" data-tab="sensor-spec">
+              <span>🌊 IoT Buoy Hardware</span>
+            </button>
+            <button class="sol-tab-btn" data-tab="ai-spec">
+              <span>🧠 AI Anomaly Models</span>
+            </button>
+            <button class="sol-tab-btn" data-tab="dashboard-spec">
+              <span>📊 Defense Command HUD</span>
+            </button>
+          </div>
+
+          <!-- Tab 1: Hardware -->
+          <div class="sol-tab-content active" id="tab-sensor-spec">
+            <div class="sol-tab-details">
+              <h4>Ruggedized Multi-Depth Telemetry Pod</h4>
+              <p>Designed for open Arabian Sea and Bay of Bengal conditions with galvanic isolation and antifouling copper-nickel sensor sleeves.</p>
+              <ul class="sol-feature-list">
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                  Continuous Dissolved Oxygen &amp; pH sampling at 10-second intervals
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                  Solar + wave energy kinetic harvesting for 24/7 continuous duty cycle
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                  Onboard cryptographic chip verifying telemetry authenticity against tampering
+                </li>
+              </ul>
+            </div>
+            <div class="sol-tab-code-preview">
+              <span class="code-line"><span class="keyword">const</span> nodeTelemetry = {</span>
+              <span class="code-line">&nbsp;&nbsp;buoy_id: <span class="string">"IN-AS-BUOY-07"</span>,</span>
+              <span class="code-line">&nbsp;&nbsp;coords: [<span class="metric">18.9220</span>, <span class="metric">72.8347</span>], <span class="comment">// Arabian Sea</span></span>
+              <span class="code-line">&nbsp;&nbsp;dissolved_oxygen: <span class="metric">6.84</span>, <span class="comment">// mg/L</span></span>
+              <span class="code-line">&nbsp;&nbsp;sea_surface_temp: <span class="metric">28.4</span>, <span class="comment">// °C</span></span>
+              <span class="code-line">&nbsp;&nbsp;salinity_psu: <span class="metric">35.2</span>,</span>
+              <span class="code-line">&nbsp;&nbsp;health_status: <span class="string">"OPTIMAL"</span>,</span>
+              <span class="code-line">&nbsp;&nbsp;timestamp_utc: <span class="string">"2026-09-05T08:15:00Z"</span></span>
+              <span class="code-line">};</span>
+            </div>
+          </div>
+
+          <!-- Tab 2: AI -->
+          <div class="sol-tab-content" id="tab-ai-spec">
+            <div class="sol-tab-details">
+              <h4>Convolutional &amp; Temporal Intelligence</h4>
+              <p>Dual-stage inference pipeline executing lightweight edge models on buoys and heavy transformer vision models on cloud clusters.</p>
+              <ul class="sol-feature-list">
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                  99.4% precision in distinguishing oil slicks from organic algal bi-products
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                  Autonomous synthetic AIS path reconstruction for ghost vessels
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                  Instant inference speed under 45ms per multispectral satellite tile
+                </li>
+              </ul>
+            </div>
+            <div class="sol-tab-code-preview">
+              <span class="code-line"><span class="keyword">class</span> <span class="string">MarineAnomalyDetector</span>:</span>
+              <span class="code-line">&nbsp;&nbsp;<span class="keyword">def</span> evaluate_threat(sensor_stream, sar_matrix):</span>
+              <span class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;mhi_score = lstm_model.predict(sensor_stream)</span>
+              <span class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;slick_prob = yolo_ocean.detect(sar_matrix)</span>
+              <span class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span> slick_prob &gt; <span class="metric">0.85</span> <span class="keyword">or</span> mhi_score &lt; <span class="metric">40.0</span>:</span>
+              <span class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> TriggerAlert(level=<span class="string">"CRITICAL"</span>)</span>
+              <span class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> TelemetryStatus.NOMINAL</span>
+            </div>
+          </div>
+
+          <!-- Tab 3: Command HUD -->
+          <div class="sol-tab-content" id="tab-dashboard-spec">
+            <div class="sol-tab-details">
+              <h4>Sovereign Maritime Command HUD</h4>
+              <p>Designed for coastal command centers, state fisheries ministries, and Coast Guard patrol vessel helms.</p>
+              <ul class="sol-feature-list">
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                  Geospatial 3D interactive heatmaps of coastal waters
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                  Real-time push notifications over encrypted WebSockets
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                  One-click export of formal SIH / maritime incident reports
+                </li>
+              </ul>
+            </div>
+            <div class="sol-tab-code-preview">
+              <span class="code-line"><span class="comment">// Real-Time WebSocket Telemetry Gateway</span></span>
+              <span class="code-line">ws.subscribe(<span class="string">"channel:indian-coastal-mesh"</span>);</span>
+              <span class="code-line">ws.on(<span class="string">"incident:dispatched"</span>, (payload) =&gt; {</span>
+              <span class="code-line">&nbsp;&nbsp;console.log(<span class="string">"Urgent Alert to Coast Guard Unit 04"</span>);</span>
+              <span class="code-line">&nbsp;&nbsp;renderIncidentMarker(payload.coords, payload.severity);</span>
+              <span class="code-line">});</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         HOW IT IS GOING TO HAPPEN (WORKFLOW / ARCHITECTURE)
+         ========================================================= -->
+    <section class="how-section" id="how-it-works">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">
+            <span class="pulse-dot"></span>
+            <span>Execution Blueprint</span>
+          </div>
+          <h2 class="section-title">
+            How It Is Going To Happen: <span class="gradient-text">The End-to-End Pipeline</span>
+          </h2>
+          <p class="section-subtitle">
+            A battle-tested 4-phase architectural pipeline delivering from raw ocean currents to emergency command desks in under a second.
+          </p>
+        </div>
+
+        <div class="pipeline-flow">
+          <!-- Step 1 -->
+          <div class="pipeline-step">
+            <div class="step-marker">01</div>
+            <div class="step-card">
+              <div class="step-header">
+                <h3 class="step-title">Multi-Vector Ocean Data Ingestion</h3>
+                <span class="step-tag">Phase 1 • Acquisition</span>
+              </div>
+              <p class="step-desc">
+                Deploying autonomous sensor buoys equipped with multiparameter probes across critical coastal choke points, complemented by European Space Agency Sentinel-1/2 SAR optical passes and terrestrial AIS radio receivers.
+              </p>
+              <div class="step-tech-pills">
+                <span class="step-tech-pill">ESP32-S3 IoT Nodes</span>
+                <span class="step-tech-pill">Sentinel-1/2 SAR</span>
+                <span class="step-tech-pill">LoRaWAN Gateways</span>
+                <span class="step-tech-pill">Terrestrial AIS</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="pipeline-step">
+            <div class="step-marker">02</div>
+            <div class="step-card">
+              <div class="step-header">
+                <h3 class="step-title">Edge Cleansing &amp; Telemetry Synchronization</h3>
+                <span class="step-tag">Phase 2 • Pre-Processing</span>
+              </div>
+              <p class="step-desc">
+                High-frequency raw data undergoes Kalman filtering, tidal calibration, bio-fouling drift compensation, and geographic coordinate alignment right on local edge gateways before uplink, minimizing bandwidth costs.
+              </p>
+              <div class="step-tech-pills">
+                <span class="step-tech-pill">Kalman Smoothing</span>
+                <span class="step-tech-pill">Edge Noise Filter</span>
+                <span class="step-tech-pill">Tidal Offset Calibration</span>
+                <span class="step-tech-pill">MQTT Broker</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="pipeline-step">
+            <div class="step-marker">03</div>
+            <div class="step-card">
+              <div class="step-header">
+                <h3 class="step-title">Neural Anomaly Detection &amp; Marine Health Index</h3>
+                <span class="step-tag">Phase 3 • AI Core</span>
+              </div>
+              <p class="step-desc">
+                Our twin neural models execute: A spatial computer vision model identifying surface slicks and dark ships, coupled with an LSTM recurrent network calculating the unified Marine Health Index (MHI) to predict hypoxia and coral bleaching 72 hours out.
+              </p>
+              <div class="step-tech-pills">
+                <span class="step-tech-pill">YOLO-Marine SAR</span>
+                <span class="step-tech-pill">Bi-Directional LSTM</span>
+                <span class="step-tech-pill">MHI Scoring Algorithm</span>
+                <span class="step-tech-pill">PyTorch &amp; ONNX</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="pipeline-step">
+            <div class="step-marker">04</div>
+            <div class="step-card">
+              <div class="step-header">
+                <h3 class="step-title">Actionable Command &amp; Stakeholder Dispatch</h3>
+                <span class="step-tag">Phase 4 • Delivery</span>
+              </div>
+              <p class="step-desc">
+                Actionable threat indices trigger automated geo-fenced bulletins to Indian Coast Guard tactical units, SMS advisories to local fishing cooperatives in regional languages, and live streaming to government dashboard APIs.
+              </p>
+              <div class="step-tech-pills">
+                <span class="step-tech-pill">WebSockets Stream</span>
+                <span class="step-tech-pill">SMS Gateway (Regional)</span>
+                <span class="step-tech-pill">GeoJSON Heatmaps</span>
+                <span class="step-tech-pill">Role-Based Access</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         TEAM SECTION (TEAM SEA & SYNTAX)
+         ========================================================= -->
+    <section class="team-section" id="team">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">
+            <span class="pulse-dot"></span>
+            <span>The Innovators</span>
+          </div>
+          <h2 class="section-title">
+            Meet <span class="gradient-text">Team Sea &amp; Syntax</span>
+          </h2>
+          <p class="section-subtitle">
+            A passionate group of developers, data engineers, and hardware architects bringing cutting-edge technology to India's marine conservation challenge.
+          </p>
+        </div>
+
+        <div class="team-grid">
+          <!-- Member 1 -->
+          <div class="team-card">
+            <div class="team-avatar-wrap">
+              <div class="team-avatar">SS</div>
+            </div>
+            <h3 class="team-name">Sumit Sharma</h3>
+            <div class="team-role">Team Lead &amp; Full-Stack Architect</div>
+            <p class="team-bio">Spearheading system architecture, end-to-end integration, real-time WebSocket pipelines, and SIH project strategy.</p>
+            <div class="team-skills">
+              <span class="team-skill-pill">System Design</span>
+              <span class="team-skill-pill">Node.js</span>
+              <span class="team-skill-pill">React</span>
+              <span class="team-skill-pill">Cloud Ops</span>
+            </div>
+            <div class="team-socials">
+              <a href="#" class="team-social-link" title="GitHub" aria-label="GitHub">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+              </a>
+              <a href="#" class="team-social-link" title="LinkedIn" aria-label="LinkedIn">
+                <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Member 2 -->
+          <div class="team-card">
+            <div class="team-avatar-wrap">
+              <div class="team-avatar">AK</div>
+            </div>
+            <h3 class="team-name">Aarav Kapoor</h3>
+            <div class="team-role">AI / ML &amp; Ocean Vision Lead</div>
+            <p class="team-bio">Developing deep learning satellite SAR segmentation, YOLO dark vessel detection, and LSTM marine time series models.</p>
+            <div class="team-skills">
+              <span class="team-skill-pill">PyTorch</span>
+              <span class="team-skill-pill">YOLOv8</span>
+              <span class="team-skill-pill">Computer Vision</span>
+              <span class="team-skill-pill">SAR Processing</span>
+            </div>
+            <div class="team-socials">
+              <a href="#" class="team-social-link" title="GitHub" aria-label="GitHub">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+              </a>
+              <a href="#" class="team-social-link" title="LinkedIn" aria-label="LinkedIn">
+                <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Member 3 -->
+          <div class="team-card">
+            <div class="team-avatar-wrap">
+              <div class="team-avatar">RV</div>
+            </div>
+            <h3 class="team-name">Rohan Verma</h3>
+            <div class="team-role">IoT &amp; Marine Hardware Specialist</div>
+            <p class="team-bio">Engineering rugged submersible buoy micro-controllers, LoRaWAN mesh transmitters, and multi-sensor calibration.</p>
+            <div class="team-skills">
+              <span class="team-skill-pill">ESP32</span>
+              <span class="team-skill-pill">LoRaWAN</span>
+              <span class="team-skill-pill">Sensor Calibration</span>
+              <span class="team-skill-pill">C++ / Embedded</span>
+            </div>
+            <div class="team-socials">
+              <a href="#" class="team-social-link" title="GitHub" aria-label="GitHub">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+              </a>
+              <a href="#" class="team-social-link" title="LinkedIn" aria-label="LinkedIn">
+                <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Member 4 -->
+          <div class="team-card">
+            <div class="team-avatar-wrap">
+              <div class="team-avatar">PN</div>
+            </div>
+            <h3 class="team-name">Priya Nair</h3>
+            <div class="team-role">Geospatial UI/UX &amp; Data Visualization</div>
+            <p class="team-bio">Crafting interactive radar dashboards, Deck.gl spatial mapping, emergency alert workflows, and responsive visual systems.</p>
+            <div class="team-skills">
+              <span class="team-skill-pill">Mapbox / Deck.gl</span>
+              <span class="team-skill-pill">UI/UX Systems</span>
+              <span class="team-skill-pill">Data Viz</span>
+              <span class="team-skill-pill">Tailwind &amp; CSS3</span>
+            </div>
+            <div class="team-socials">
+              <a href="#" class="team-social-link" title="GitHub" aria-label="GitHub">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+              </a>
+              <a href="#" class="team-social-link" title="LinkedIn" aria-label="LinkedIn">
+                <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="team-motto-box">
+          <p>"Bridging high-tech lines of syntax with deep ocean depths to protect marine biodiversity."</p>
+          <span>— Team Sea &amp; Syntax Philosophy</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- =========================================================
+       LIVE TELEMETRY MISSION MODAL (LAUNCHED BY 'START' BUTTON)
+       ========================================================= -->
+  <div class="modal-overlay" id="missionModal">
+    <div class="mission-modal" role="dialog" aria-modal="true">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="pulse-ring"></span>
+          <div>
+            <h3 class="modal-title">MarineMetrics Mission Control</h3>
+            <span class="modal-station-tag" id="currentStationLabel">Arabian Sea Buoy Array #07 • Mumbai Offshore</span>
+          </div>
+        </div>
+        <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close Mission Control">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Coastal Station Selector -->
+        <div class="station-switcher">
+          <span>SELECT OBSERVATION REGION:</span>
+          <button class="station-chip active" data-station="mumbai">Arabian Sea (Mumbai)</button>
+          <button class="station-chip" data-station="vizag">Bay of Bengal (Vizag)</button>
+          <button class="station-chip" data-station="kochi">Laccadive Sea (Kochi)</button>
+          <button class="station-chip" data-station="sundarbans">Sundarbans Mangrove Hub</button>
+        </div>
+
+        <!-- Live Metrics Gauges -->
+        <div class="modal-metrics-grid">
+          <div class="metric-gauge-card">
+            <div class="label">Sea Surface Temp</div>
+            <div class="value" id="valTemp">28.4<span class="unit">°C</span></div>
+            <div class="indicator normal" id="indTemp">● Nominal (24–29°C)</div>
+          </div>
+          <div class="metric-gauge-card">
+            <div class="label">Dissolved Oxygen</div>
+            <div class="value" id="valDO">6.8<span class="unit">mg/L</span></div>
+            <div class="indicator normal" id="indDO">● Healthy Aerobic (&gt;5.0)</div>
+          </div>
+          <div class="metric-gauge-card">
+            <div class="label">Water Acidity (pH)</div>
+            <div class="value" id="valPH">8.1<span class="unit">pH</span></div>
+            <div class="indicator normal" id="indPH">● Balanced Marine (8.1)</div>
+          </div>
+          <div class="metric-gauge-card">
+            <div class="label">Salinity Level</div>
+            <div class="value" id="valSalinity">35.2<span class="unit">PSU</span></div>
+            <div class="indicator normal" id="indSalinity">● Open Ocean Standard</div>
+          </div>
+          <div class="metric-gauge-card">
+            <div class="label">Turbidity (Clarity)</div>
+            <div class="value" id="valTurbidity">2.4<span class="unit">NTU</span></div>
+            <div class="indicator normal" id="indTurbidity">● High Transmissivity</div>
+          </div>
+          <div class="metric-gauge-card">
+            <div class="label">Marine Health Index</div>
+            <div class="value" id="valMHI" style="color: var(--neon-emerald);">94.8<span class="unit">/100</span></div>
+            <div class="indicator normal" id="indMHI">● Ecosystem Thriving</div>
+          </div>
+        </div>
+
+        <!-- Real-Time Stream Terminal -->
+        <div class="telemetry-stream-panel">
+          <div class="stream-header">
+            <div class="stream-title">
+              <span>⚡ LIVE MULTIPLEX TELEMETRY FEED</span>
+            </div>
+            <span class="mono-text" style="font-size: 0.75rem; color: var(--neon-emerald);">STATUS: 100% INGESTION RATE</span>
+          </div>
+          <div class="stream-logs" id="streamLogContainer">
+            <div class="log-entry">
+              <span class="time">[13:45:02 UTC]</span>
+              <span class="msg info">LoRaWAN packet handshake verified from Gateway #AS-07.</span>
+            </div>
+            <div class="log-entry">
+              <span class="time">[13:45:06 UTC]</span>
+              <span class="msg success">Sentinel-2 multi-spectral tile calibration matched ground buoy reflectance.</span>
+            </div>
+            <div class="log-entry">
+              <span class="time">[13:45:10 UTC]</span>
+              <span class="msg success">No illegal vessel transponder suppression detected in 12nm maritime zone.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <div class="modal-footer-info">
+          <span>Hardware Mesh: Node AES-256 Encrypted • SIH 2024 MarineMetrics Prototype</span>
+        </div>
+        <div class="modal-action-btns">
+          <button class="btn-trigger-anomaly" id="btnTriggerAnomaly">⚡ Simulate Chemical Spill Anomaly</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       FOOTER (MADE BY TEAM SEA & SYNTAX)
+       ========================================================= -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3 class="brand-font">MarineMetrics</h3>
+          <p>
+            Autonomous Ocean Intelligence and Coastal Defense platform designed to monitor maritime ecosystems, detect illegal fishing, and safeguard India's blue economy.
+          </p>
+          <div class="footer-team-callout">
+            <span>Engineering Team: <strong>Sea &amp; Syntax</strong></span>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="#hero">Overview</a></li>
+            <li><a href="#problem">Problem Statement</a></li>
+            <li><a href="#solution">Provided Solution</a></li>
+            <li><a href="#how-it-works">Architecture</a></li>
+            <li><a href="#team">Team Members</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Hackathon Scope</h4>
+          <ul class="footer-links">
+            <li><a href="#hero">Smart India Hackathon</a></li>
+            <li><a href="#problem">Ministry of Earth Sciences</a></li>
+            <li><a href="#solution">Coastal Security</a></li>
+            <li><a href="#solution">Blue Economy Mission</a></li>
+            <li><a href="#team">Sea &amp; Syntax Lab</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>System Status</h4>
+          <ul class="footer-links">
+            <li><a href="#" style="color: var(--neon-emerald);">● Sentinel Feeds: Nominal</a></li>
+            <li><a href="#" style="color: var(--neon-emerald);">● LoRaWAN Mesh: Online</a></li>
+            <li><a href="#" style="color: var(--neon-cyan);">● API Version: v2.4-SIH</a></li>
+            <li><a href="#" style="color: var(--text-secondary);">● Region: IN-EEZ Grid</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Prominent Attribution Bar -->
+      <div class="footer-credit-bar">
+        <div class="footer-credit-main">
+          <span>Made with 💙 by team</span>
+          <span class="team-highlight">Sea &amp; Syntax</span>
+        </div>
+
+        <div class="footer-sih-tag">
+          <span>Smart India Hackathon • Project MarineMetrics &copy; 2026</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Main JavaScript Logic -->
+  <script src="app.js"></script>
+</body>
+</html>
