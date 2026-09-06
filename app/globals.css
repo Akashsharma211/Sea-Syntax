@@ -2903,5 +2903,550 @@ section {
   }
 }
 
+/* =========================================================
+   AUTHENTIC TALLYPRIME GATEWAY SYSTEM
+   ========================================================= */
 
+/* Top Function Key Bar */
+.tally-fkey-ribbon {
+  background: #091728;
+  border-bottom: 1px solid #162c47;
+  padding: 4px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  font-size: 0.78rem;
+}
 
+.tally-fkey-item {
+  background: #050d18;
+  border: 1px solid #1c3554;
+  color: #94a3b8;
+  padding: 3px 8px;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: inherit;
+  transition: all 0.15s ease;
+}
+
+.tally-fkey-item:hover {
+  border-color: #00f0ff;
+  color: #f8fafc;
+  background: #0d2036;
+}
+
+.tally-fkey-badge {
+  color: #f59e0b;
+  font-weight: 800;
+}
+
+/* Main Gateway Layout Grid */
+.tally-gateway-viewport {
+  min-height: 100vh;
+  background: #030812;
+  color: #f8fafc;
+  font-family: 'Cascadia Code', 'Consolas', 'Courier New', monospace;
+  display: flex;
+  flex-direction: column;
+}
+
+.tally-gateway-split {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  min-height: calc(100vh - 40px);
+}
+
+@media (max-width: 960px) {
+  .tally-gateway-split {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Left Pane: Company Info & Period */
+.tally-gateway-left {
+  background: #050e1b;
+  border-right: 1px solid #14253d;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.tally-info-block {
+  background: #081324;
+  border: 1px solid #172a44;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.tally-info-header {
+  background: #0b1a2e;
+  padding: 8px 14px;
+  color: #00f0ff;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-bottom: 1px solid #172a44;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tally-info-body {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 0.85rem;
+}
+
+.tally-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.tally-info-lbl {
+  color: #64748b;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.tally-info-val {
+  color: #f1f5f9;
+  font-weight: 700;
+  text-align: right;
+  word-break: break-word;
+}
+
+.tally-info-val.highlight {
+  color: #f59e0b;
+}
+
+.tally-btn-secondary {
+  background: #0c1c2e;
+  border: 1px solid #1d3a5e;
+  color: #38bdf8;
+  padding: 8px 14px;
+  border-radius: 3px;
+  font-family: inherit;
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.tally-btn-secondary:hover {
+  background: #142a45;
+  border-color: #38bdf8;
+  color: #ffffff;
+}
+
+/* Right Pane: Iconic Gateway of Tally Menu Card */
+.tally-gateway-right {
+  background: #030812;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 20px;
+  position: relative;
+  background-image: 
+    radial-gradient(circle at 50% 30%, rgba(14, 34, 61, 0.4) 0%, transparent 70%);
+}
+
+.tally-gateway-card {
+  width: 100%;
+  max-width: 460px;
+  background: #08111e;
+  border: 2px solid #00f0ff;
+  border-radius: 4px;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.9), 0 0 30px rgba(0, 240, 255, 0.1);
+  overflow: hidden;
+}
+
+.tally-gateway-card-header {
+  background: #0d1e34;
+  padding: 12px 16px;
+  text-align: center;
+  border-bottom: 2px solid #00f0ff;
+}
+
+.tally-gateway-title {
+  color: #ffffff;
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.tally-gateway-subtitle {
+  color: #38bdf8;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  margin-top: 2px;
+}
+
+.tally-gateway-menu-list {
+  padding: 10px 0 16px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.tally-menu-section-header {
+  color: #00f0ff;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 12px 28px 4px 28px;
+  border-bottom: 1px dashed rgba(0, 240, 255, 0.2);
+  margin-bottom: 4px;
+}
+
+.tally-menu-section-header:not(:first-child) {
+  margin-top: 10px;
+}
+
+.tally-menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 28px 7px 32px;
+  font-size: 0.94rem;
+  color: #cbd5e1;
+  cursor: pointer;
+  border-left: 4px solid transparent;
+  transition: all 0.12s ease;
+  user-select: none;
+}
+
+.tally-menu-item:hover,
+.tally-menu-item.active {
+  background: rgba(245, 158, 11, 0.15);
+  color: #ffffff;
+  border-left-color: #f59e0b;
+}
+
+.tally-menu-item.active {
+  background: #f59e0b;
+  color: #000000;
+  font-weight: 700;
+}
+
+.tally-menu-item.active .tally-hotkey {
+  color: #000000;
+  text-decoration: underline;
+}
+
+.tally-menu-item.active .tally-menu-arrow {
+  color: #000000;
+  opacity: 1;
+}
+
+.tally-hotkey {
+  color: #f59e0b;
+  font-weight: 800;
+}
+
+.tally-menu-desc {
+  font-size: 0.74rem;
+  color: #64748b;
+  margin-left: 8px;
+}
+
+.tally-menu-arrow {
+  color: #f59e0b;
+  opacity: 0;
+  font-weight: 800;
+  transition: opacity 0.15s ease;
+}
+
+.tally-menu-item:hover .tally-menu-arrow {
+  opacity: 1;
+}
+
+.tally-gateway-footer-hint {
+  padding: 10px 24px;
+  background: #050d18;
+  border-top: 1px solid #14253d;
+  font-size: 0.76rem;
+  color: #64748b;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Modal Windows & Viewers */
+.tally-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 13, 0.85);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.tally-modal-box {
+  width: 100%;
+  max-width: 900px;
+  background: #08111e;
+  border: 1px solid #1a2f4c;
+  border-radius: 4px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.95), 0 0 40px rgba(0, 240, 255, 0.1);
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: tallyModalIn 0.18s ease-out;
+}
+
+@keyframes tallyModalIn {
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.tally-modal-header {
+  background: #0d1e34;
+  border-bottom: 2px solid #00f0ff;
+  padding: 10px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tally-modal-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tally-modal-close-btn {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  padding: 4px 10px;
+  border-radius: 3px;
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tally-modal-close-btn:hover {
+  background: #ef4444;
+  color: #ffffff;
+}
+
+.tally-modal-content {
+  padding: 20px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+/* Voucher Selector Navigation Bar */
+.tally-voucher-bar {
+  display: flex;
+  gap: 6px;
+  background: #060e1a;
+  padding: 8px 12px;
+  border-bottom: 1px solid #14253d;
+  flex-wrap: wrap;
+}
+
+.tally-voucher-btn {
+  background: #091626;
+  border: 1px solid #1c3554;
+  color: #94a3b8;
+  padding: 5px 12px;
+  border-radius: 3px;
+  font-family: inherit;
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tally-voucher-btn:hover {
+  color: #ffffff;
+  border-color: #38bdf8;
+}
+
+.tally-voucher-btn.active {
+  background: #00f0ff;
+  color: #020813;
+  border-color: #00f0ff;
+}
+
+/* Voucher Form Grid */
+.tally-voucher-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 700px) {
+  .tally-voucher-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Daybook Specifics */
+.tally-badge-voucher {
+  padding: 2px 8px;
+  border-radius: 2px;
+  font-size: 0.74rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.tally-badge-sales { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.4); }
+.tally-badge-purchase { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4); }
+.tally-badge-payment { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); }
+.tally-badge-receipt { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
+.tally-badge-journal { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.4); }
+.tally-badge-contra { background: rgba(20, 184, 166, 0.2); color: #2dd4bf; border: 1px solid rgba(20, 184, 166, 0.4); }
+
+/* Daybook Summary Totals Bar */
+.tally-totals-row {
+  background: #0c1d33;
+  border-top: 2px solid #00f0ff;
+  font-weight: 800;
+  color: #00f0ff;
+}
+
+/* Quit Confirmation Dialog Overlay */
+.tally-quit-dialog {
+  background: #0a1728;
+  border: 2px solid #f59e0b;
+  border-radius: 4px;
+  padding: 24px 32px;
+  text-align: center;
+  box-shadow: 0 0 30px rgba(245, 158, 11, 0.3);
+  max-width: 380px;
+  width: 100%;
+}
+
+.tally-quit-title {
+  color: #f59e0b;
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.tally-quit-subtitle {
+  color: #cbd5e1;
+  font-size: 0.88rem;
+  margin-bottom: 20px;
+}
+
+.tally-quit-btn-group {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.tally-tree-group {
+  margin-bottom: 12px;
+  border: 1px solid #15273f;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.tally-tree-header {
+  background: #0c1d31;
+  padding: 8px 14px;
+  font-weight: 700;
+  color: #38bdf8;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.88rem;
+}
+
+.tally-tree-item {
+  padding: 6px 14px 6px 30px;
+  border-bottom: 1px solid #0d1a2b;
+  font-size: 0.84rem;
+  display: flex;
+  justify-content: space-between;
+  color: #cbd5e1;
+}
+
+.tally-tree-item:last-child {
+  border-bottom: none;
+}
+
+/* Alteration & Search Utility Styles */
+.tally-search-bar {
+  width: 100%;
+  background: #040c18;
+  border: 1px solid #192f4c;
+  color: #f8fafc;
+  padding: 6px 12px;
+  font-size: 0.88rem;
+  font-family: inherit;
+  border-radius: 3px;
+  margin-bottom: 12px;
+  outline: none;
+}
+
+.tally-search-bar:focus {
+  border-color: #00f0ff;
+  box-shadow: 0 0 8px rgba(0, 240, 255, 0.2);
+}
+
+.tally-alter-action-btn {
+  background: #0d2137;
+  color: #38bdf8;
+  border: 1px solid #1e3f66;
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tally-alter-action-btn:hover {
+  background: #38bdf8;
+  color: #020813;
+}
+
+.tally-dr-cr-select {
+  width: 70px !important;
+  background: #091a2e;
+  border-left: none;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  font-weight: 700;
+  color: #f59e0b;
+}
+
+.tally-party-balance-preview {
+  font-size: 0.8rem;
+  color: #f59e0b;
+  margin-top: 4px;
+  padding-left: 2px;
+}
