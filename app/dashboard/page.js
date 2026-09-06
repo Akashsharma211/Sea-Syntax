@@ -20,6 +20,30 @@ const parseBalanceAmount = (bal, raw) => {
   return isNaN(num) ? 0 : num;
 };
 
+// Helper to create a fresh, empty voucher state
+const createBlankVoucher = (type = 'Sales') => {
+  const prefix = type === 'Purchase' ? 'PUR' : 'INV';
+  const randomNum = Math.floor(100 + Math.random() * 900);
+  return {
+    type,
+    voucherNo: `${prefix}/2026/${randomNum}`,
+    date: '06-Sep-2026',
+    particulars: '',
+    account: type === 'Purchase' ? 'Purchase Accounts' : 'Sales Accounts',
+    items: [
+      {
+        itemName: '',
+        quantity: 1,
+        unit: 'Pcs',
+        rate: 0,
+        amount: 0,
+      },
+    ],
+    amount: 0,
+    narration: '',
+  };
+};
+
 // Default initial vouchers if none exist in localStorage
 const DEFAULT_VOUCHERS = [
   {
@@ -29,53 +53,79 @@ const DEFAULT_VOUCHERS = [
     voucherNo: 'INV/2026/089',
     particulars: 'Oceanic Marine Exports Pvt Ltd',
     account: 'Sales Accounts',
+    items: [
+      {
+        itemName: 'Syntax Marine IoT Sensor Module',
+        quantity: 20,
+        unit: 'Pcs',
+        rate: 4500,
+        amount: 90000,
+      },
+      {
+        itemName: 'High-Grade Deep Sea Salt (10kg)',
+        quantity: 100,
+        unit: 'Bags',
+        rate: 350,
+        amount: 35000,
+      },
+      {
+        itemName: 'Aquaculture Aeration Valve V2',
+        quantity: 10,
+        unit: 'Sets',
+        rate: 2000,
+        amount: 20000,
+      },
+    ],
     amount: 145000,
     isDebit: false,
-    narration: 'Being marine grade seafood and sensor consignment delivered',
+    narration: 'Consignment of telemetry sensors and salt delivered to Oceanic Marine',
   },
   {
     id: 'v-102',
-    date: '05-Sep-2026',
-    type: 'Receipt',
-    voucherNo: 'REC/2026/042',
-    particulars: 'Pacific Fleet Logistics',
-    account: 'State Bank of India',
-    amount: 88500,
-    isDebit: true,
-    narration: 'Payment received via RTGS against bill #074',
-  },
-  {
-    id: 'v-103',
     date: '04-Sep-2026',
     type: 'Purchase',
     voucherNo: 'PUR/2026/033',
     particulars: 'Harbor Hardware & Sensors Ltd',
     account: 'Purchase Accounts',
+    items: [
+      {
+        itemName: 'Seaweed Bio-Polymer Resin (50kg)',
+        quantity: 4,
+        unit: 'Drums',
+        rate: 12000,
+        amount: 48000,
+      },
+      {
+        itemName: 'Aquaculture Aeration Valve V2',
+        quantity: 2,
+        unit: 'Sets',
+        rate: 2200,
+        amount: 4400,
+      },
+    ],
     amount: 52400,
     isDebit: true,
-    narration: 'Purchase of raw telemetry sensors and micro-controllers',
+    narration: 'Inward purchase of polymer resins and valve sets',
   },
   {
-    id: 'v-104',
-    date: '03-Sep-2026',
-    type: 'Payment',
-    voucherNo: 'PAY/2026/061',
-    particulars: 'Visakhapatnam Port Trust',
-    account: 'State Bank of India',
-    amount: 24000,
-    isDebit: true,
-    narration: 'Monthly dock berthing and terminal charges paid via NEFT',
-  },
-  {
-    id: 'v-105',
+    id: 'v-103',
     date: '02-Sep-2026',
-    type: 'Contra',
-    voucherNo: 'CNT/2026/015',
-    particulars: 'Cash In Hand',
-    account: 'State Bank of India',
-    amount: 15000,
+    type: 'Sales',
+    voucherNo: 'INV/2026/082',
+    particulars: 'Pacific Fleet Logistics',
+    account: 'Sales Accounts',
+    items: [
+      {
+        itemName: 'Syntax Marine IoT Sensor Module',
+        quantity: 15,
+        unit: 'Pcs',
+        rate: 4500,
+        amount: 67500,
+      },
+    ],
+    amount: 67500,
     isDebit: false,
-    narration: 'Cash deposited into SBI current account',
+    narration: 'Telemetry modules supplied to Pacific Fleet',
   },
 ];
 
@@ -122,17 +172,12 @@ export default function DashboardPage() {
 
   // Vouchers state
   const [vouchers, setVouchers] = useState([]);
-  const [newVoucher, setNewVoucher] = useState({
-    type: 'Sales',
-    voucherNo: '',
-    date: '06-Sep-2026',
-    particulars: '',
-    account: 'Sales Accounts',
-    amount: '',
-    narration: '',
-  });
+  const [newVoucher, setNewVoucher] = useState(() => createBlankVoucher('Sales'));
   const [voucherFilter, setVoucherFilter] = useState('All');
   const [showVoucherAcceptPrompt, setShowVoucherAcceptPrompt] = useState(false);
+
+  // Selected ledger for Ledger Statement register
+  const [selectedLedgerName, setSelectedLedgerName] = useState('');
 
   // Masters state
   const [ledgers, setLedgers] = useState([]);
@@ -162,8 +207,9 @@ export default function DashboardPage() {
       { section: 'MASTERS', label: 'Alter', hotkey: 'A', keyChar: 'a', action: 'master_alter', desc: 'Modify existing records' },
       { section: 'MASTERS', label: 'Chart of Accounts', hotkey: 'h', keyChar: 'h', action: 'master_chart', desc: 'Account hierarchy & trees', highlightPos: 1 },
       // TRANSACTIONS
-      { section: 'TRANSACTIONS', label: 'Vouchers', hotkey: 'V', keyChar: 'v', action: 'trans_vouchers', desc: 'Sales, Purchase, Payments' },
+      { section: 'TRANSACTIONS', label: 'Vouchers', hotkey: 'V', keyChar: 'v', action: 'trans_vouchers', desc: 'Sales & Purchase Invoices' },
       { section: 'TRANSACTIONS', label: 'Day Book', hotkey: 'D', keyChar: 'd', action: 'trans_daybook', desc: 'Daily transaction register' },
+      { section: 'TRANSACTIONS', label: 'Ledger', hotkey: 'L', keyChar: 'l', action: 'trans_ledger', desc: 'Ledger statement & register' },
       // REPORTS (Banking removed per user instruction)
       { section: 'REPORTS', label: 'Balance Sheet', hotkey: 'B', keyChar: 'b', action: 'rep_balance', desc: 'Assets & Liabilities' },
       { section: 'REPORTS', label: 'Profit & Loss A/c', hotkey: 'P', keyChar: 'p', action: 'rep_pl', desc: 'Income & Expense Statement' },
@@ -244,22 +290,9 @@ export default function DashboardPage() {
 
   // Update voucher number and default offset account when voucher type changes
   useEffect(() => {
-    const prefixMap = {
-      Sales: 'INV',
-      Purchase: 'PUR',
-      Payment: 'PAY',
-      Receipt: 'REC',
-      Contra: 'CNT',
-      Journal: 'JRN',
-    };
-    const prefix = prefixMap[newVoucher.type] || 'VCH';
+    const prefix = newVoucher.type === 'Purchase' ? 'PUR' : 'INV';
     const randomNum = Math.floor(100 + Math.random() * 900);
-
-    let defaultOffset = 'Sales Accounts';
-    if (newVoucher.type === 'Purchase') defaultOffset = 'Purchase Accounts';
-    if (newVoucher.type === 'Payment' || newVoucher.type === 'Receipt' || newVoucher.type === 'Contra') {
-      defaultOffset = 'State Bank of India';
-    }
+    const defaultOffset = newVoucher.type === 'Purchase' ? 'Purchase Accounts' : 'Sales Accounts';
 
     setNewVoucher((prev) => ({
       ...prev,
@@ -273,6 +306,10 @@ export default function DashboardPage() {
     if (action === 'quit') {
       setShowQuitModal(true);
     } else {
+      if (action === 'trans_vouchers') {
+        setNewVoucher(createBlankVoucher('Sales'));
+        setShowVoucherAcceptPrompt(false);
+      }
       setActiveModal(action);
       setEditingLedger(null);
       setEditingItem(null);
@@ -303,6 +340,9 @@ export default function DashboardPage() {
           } else if (editingItem) {
             setEditingItem(null);
           } else {
+            if (activeModal === 'trans_vouchers') {
+              setNewVoucher(createBlankVoucher('Sales'));
+            }
             setActiveModal(null);
           }
         }
@@ -479,33 +519,134 @@ export default function DashboardPage() {
     }
   };
 
-  // Save new Voucher
+  // Handle stock item row change in voucher
+  const handleItemChange = (index, field, value) => {
+    setNewVoucher((prev) => {
+      const updatedItems = [...prev.items];
+      const itemRow = { ...updatedItems[index] };
+
+      if (field === 'itemName') {
+        itemRow.itemName = value;
+        // Auto-match existing item for unit & standard rate
+        const matched = items.find((it) => it.name.toLowerCase() === value.toLowerCase().trim());
+        if (matched) {
+          itemRow.unit = matched.unit || itemRow.unit || 'Pcs';
+          const rNum = parseFloat(String(matched.rate).replace(/[^0-9.]/g, '')) || 0;
+          if (rNum > 0) itemRow.rate = rNum;
+        }
+      } else if (field === 'quantity') {
+        itemRow.quantity = parseFloat(value) || 0;
+      } else if (field === 'unit') {
+        itemRow.unit = value;
+      } else if (field === 'rate') {
+        itemRow.rate = parseFloat(value) || 0;
+      }
+
+      itemRow.amount = (Number(itemRow.quantity) || 0) * (Number(itemRow.rate) || 0);
+      updatedItems[index] = itemRow;
+
+      const calculatedTotal = updatedItems.reduce((acc, it) => acc + (Number(it.amount) || 0), 0);
+      return {
+        ...prev,
+        items: updatedItems,
+        amount: calculatedTotal,
+      };
+    });
+  };
+
+  // Add new item row to voucher
+  const handleAddItemRow = () => {
+    setNewVoucher((prev) => ({
+      ...prev,
+      items: [
+        ...prev.items,
+        {
+          itemName: '',
+          quantity: 1,
+          unit: 'Pcs',
+          rate: 0,
+          amount: 0,
+        },
+      ],
+    }));
+  };
+
+  // Remove item row from voucher
+  const handleRemoveItemRow = (index) => {
+    setNewVoucher((prev) => {
+      if (prev.items.length <= 1) return prev;
+      const updatedItems = prev.items.filter((_, idx) => idx !== index);
+      const calculatedTotal = updatedItems.reduce((acc, it) => acc + (Number(it.amount) || 0), 0);
+      return {
+        ...prev,
+        items: updatedItems,
+        amount: calculatedTotal,
+      };
+    });
+  };
+
+  // Save new Voucher (Sales / Purchase)
   const handleSaveVoucher = () => {
-    if (!newVoucher.particulars || !newVoucher.amount) {
-      alert('Please fill in Particulars/Party Name and Amount.');
+    if (!newVoucher.particulars || !newVoucher.particulars.trim()) {
+      alert('Please select or enter Particulars / Party A/c.');
       return;
     }
+
+    const validItems = newVoucher.items.filter(
+      (it) => it.itemName && Number(it.quantity) > 0 && Number(it.rate) > 0
+    );
+
+    if (validItems.length === 0) {
+      alert('Please add at least one stock item with valid Quantity and Rate/Price.');
+      return;
+    }
+
+    const calculatedTotal = validItems.reduce((acc, it) => acc + (Number(it.amount) || 0), 0);
 
     const created = {
       id: 'v-' + Date.now(),
       date: newVoucher.date || '06-Sep-2026',
       type: newVoucher.type,
       voucherNo: newVoucher.voucherNo,
-      particulars: newVoucher.particulars,
-      account: newVoucher.account || (newVoucher.type === 'Sales' ? 'Sales Accounts' : 'State Bank of India'),
-      amount: parseFloat(newVoucher.amount) || 0,
-      isDebit: newVoucher.type === 'Purchase' || newVoucher.type === 'Payment',
-      narration: newVoucher.narration || `Recorded under ${newVoucher.type}`,
+      particulars: newVoucher.particulars.trim(),
+      account: newVoucher.type === 'Sales' ? 'Sales Accounts' : 'Purchase Accounts',
+      items: validItems,
+      amount: calculatedTotal,
+      isDebit: newVoucher.type === 'Purchase',
+      narration: newVoucher.narration || `${newVoucher.type} Invoice for ${validItems.length} item(s)`,
     };
 
-    const updated = [created, ...vouchers];
-    setVouchers(updated);
+    const updatedVouchers = [created, ...vouchers];
+    setVouchers(updatedVouchers);
     if (typeof window !== 'undefined') {
-      localStorage.setItem('tally_vouchers', JSON.stringify(updated));
+      localStorage.setItem('tally_vouchers', JSON.stringify(updatedVouchers));
+    }
+
+    // Dynamically update stock inventory balances!
+    let updatedStockItems = [...items];
+    validItems.forEach((invItem) => {
+      const matchIdx = updatedStockItems.findIndex((it) => it.name.toLowerCase() === invItem.itemName.toLowerCase().trim());
+      if (matchIdx !== -1) {
+        const curItem = updatedStockItems[matchIdx];
+        const currentQty = parseFloat(String(curItem.stock).replace(/[^0-9.]/g, '')) || 0;
+        const changeQty = parseFloat(invItem.quantity) || 0;
+        const newQty = created.type === 'Sales' 
+          ? Math.max(0, currentQty - changeQty)
+          : currentQty + changeQty;
+        updatedStockItems[matchIdx] = {
+          ...curItem,
+          stock: `${newQty} ${invItem.unit || curItem.unit || 'Pcs'}`,
+        };
+      }
+    });
+    setItems(updatedStockItems);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('tally_items', JSON.stringify(updatedStockItems));
     }
 
     setShowVoucherAcceptPrompt(false);
-    setActiveModal('trans_daybook'); // direct to daybook to view recorded entry
+    setNewVoucher(createBlankVoucher('Sales'));
+    setActiveModal('trans_daybook');
   };
 
   // Delete Voucher
@@ -558,6 +699,65 @@ export default function DashboardPage() {
   // Selected party balance for Voucher entry screen
   const selectedPartyLedger = ledgers.find((l) => l.name === newVoucher.particulars);
 
+  // Calculations for TRANSACTIONS -> Ledger Statement Screen
+  const activeLedgerObj = ledgers.find((l) => l.name === (selectedLedgerName || ledgers[0]?.name)) || ledgers[0] || null;
+  const activeLedgerName = activeLedgerObj ? activeLedgerObj.name : '';
+
+  const opRawBalance = activeLedgerObj ? parseBalanceAmount(activeLedgerObj.balance, activeLedgerObj.rawBalance) : 0;
+  const opDrCr = activeLedgerObj?.drCr || (activeLedgerObj?.balance?.includes('Cr') ? 'Cr' : 'Dr');
+
+  const relevantLedgerVouchers = activeLedgerName
+    ? vouchers.filter((v) => v.particulars === activeLedgerName || v.account === activeLedgerName)
+    : [];
+
+  let ledgerRunningDr = opDrCr === 'Dr' ? opRawBalance : -opRawBalance;
+  let totalLedgerDebit = 0;
+  let totalLedgerCredit = 0;
+
+  const ledgerStatementEntries = relevantLedgerVouchers.map((v) => {
+    let debit = 0;
+    let credit = 0;
+    let opposingAccount = '';
+
+    if (v.particulars === activeLedgerName) {
+      if (v.type === 'Sales') {
+        debit = Number(v.amount) || 0;
+        opposingAccount = v.account || 'Sales Accounts';
+      } else if (v.type === 'Purchase') {
+        credit = Number(v.amount) || 0;
+        opposingAccount = v.account || 'Purchase Accounts';
+      } else {
+        if (v.isDebit) debit = Number(v.amount) || 0;
+        else credit = Number(v.amount) || 0;
+        opposingAccount = v.account || 'General Account';
+      }
+    } else if (v.account === activeLedgerName) {
+      opposingAccount = v.particulars;
+      if (v.type === 'Sales') {
+        credit = Number(v.amount) || 0;
+      } else if (v.type === 'Purchase') {
+        debit = Number(v.amount) || 0;
+      } else {
+        if (v.isDebit) credit = Number(v.amount) || 0;
+        else debit = Number(v.amount) || 0;
+      }
+    }
+
+    totalLedgerDebit += debit;
+    totalLedgerCredit += credit;
+    ledgerRunningDr = ledgerRunningDr + debit - credit;
+
+    return {
+      ...v,
+      opposingAccount,
+      debit,
+      credit,
+      runningBalanceStr: formatBalance(Math.abs(ledgerRunningDr), ledgerRunningDr >= 0 ? 'Dr' : 'Cr'),
+    };
+  });
+
+  const closingNetDr = (opDrCr === 'Dr' ? opRawBalance : -opRawBalance) + totalLedgerDebit - totalLedgerCredit;
+
   // Grouped Menu Sections
   const groupedSections = ['MASTERS', 'TRANSACTIONS', 'REPORTS', 'QUIT'];
 
@@ -600,6 +800,13 @@ export default function DashboardPage() {
           title="Day Book"
         >
           <span className="tally-fkey-badge">Alt+D:</span> Day Book
+        </button>
+        <button
+          className="tally-fkey-item"
+          onClick={() => triggerAction('trans_ledger')}
+          title="Ledger Statement"
+        >
+          <span className="tally-fkey-badge">Alt+L:</span> Ledger
         </button>
         <button
           className="tally-fkey-item"
@@ -1426,55 +1633,63 @@ export default function DashboardPage() {
 
       {/* 4. TRANSACTIONS: RECORD VOUCHER SCREEN */}
       {activeModal === 'trans_vouchers' && (
-        <div className="tally-modal-backdrop" onClick={() => setActiveModal(null)}>
+        <div
+          className="tally-modal-backdrop"
+          onClick={() => {
+            setNewVoucher(createBlankVoucher('Sales'));
+            setShowVoucherAcceptPrompt(false);
+            setActiveModal(null);
+          }}
+        >
           <div className="tally-modal-box" onClick={(e) => e.stopPropagation()}>
             <div className="tally-modal-header">
               <div className="tally-modal-title">
                 <span className="tally-badge">Accounting Voucher</span>
                 <span>{newVoucher.type} Voucher Recording</span>
               </div>
-              <button className="tally-modal-close-btn" onClick={() => setActiveModal(null)}>
+              <button
+                className="tally-modal-close-btn"
+                onClick={() => {
+                  setNewVoucher(createBlankVoucher('Sales'));
+                  setShowVoucherAcceptPrompt(false);
+                  setActiveModal(null);
+                }}
+              >
                 Esc: Close
               </button>
             </div>
 
-            {/* Voucher Function Keys Selector */}
+            {/* Voucher Function Keys Selector (Sales & Purchase Item Invoices) */}
             <div className="tally-voucher-bar">
               <button
-                className={`tally-voucher-btn ${newVoucher.type === 'Contra' ? 'active' : ''}`}
-                onClick={() => setNewVoucher({ ...newVoucher, type: 'Contra' })}
-              >
-                F4: Contra
-              </button>
-              <button
-                className={`tally-voucher-btn ${newVoucher.type === 'Payment' ? 'active' : ''}`}
-                onClick={() => setNewVoucher({ ...newVoucher, type: 'Payment' })}
-              >
-                F5: Payment
-              </button>
-              <button
-                className={`tally-voucher-btn ${newVoucher.type === 'Receipt' ? 'active' : ''}`}
-                onClick={() => setNewVoucher({ ...newVoucher, type: 'Receipt' })}
-              >
-                F6: Receipt
-              </button>
-              <button
-                className={`tally-voucher-btn ${newVoucher.type === 'Journal' ? 'active' : ''}`}
-                onClick={() => setNewVoucher({ ...newVoucher, type: 'Journal' })}
-              >
-                F7: Journal
-              </button>
-              <button
                 className={`tally-voucher-btn ${newVoucher.type === 'Sales' ? 'active' : ''}`}
-                onClick={() => setNewVoucher({ ...newVoucher, type: 'Sales' })}
+                onClick={() => {
+                  const prefix = 'INV';
+                  const randomNum = Math.floor(100 + Math.random() * 900);
+                  setNewVoucher((prev) => ({
+                    ...prev,
+                    type: 'Sales',
+                    voucherNo: `${prefix}/2026/${randomNum}`,
+                    account: 'Sales Accounts',
+                  }));
+                }}
               >
-                F8: Sales
+                F8: Sales (Item Invoice)
               </button>
               <button
                 className={`tally-voucher-btn ${newVoucher.type === 'Purchase' ? 'active' : ''}`}
-                onClick={() => setNewVoucher({ ...newVoucher, type: 'Purchase' })}
+                onClick={() => {
+                  const prefix = 'PUR';
+                  const randomNum = Math.floor(100 + Math.random() * 900);
+                  setNewVoucher((prev) => ({
+                    ...prev,
+                    type: 'Purchase',
+                    voucherNo: `${prefix}/2026/${randomNum}`,
+                    account: 'Purchase Accounts',
+                  }));
+                }}
               >
-                F9: Purchase
+                F9: Purchase (Item Invoice)
               </button>
             </div>
 
@@ -1508,14 +1723,16 @@ export default function DashboardPage() {
 
               {/* Party Ledger Selector with Auto-Suggest Datalist & Current Balance */}
               <div className="tally-row">
-                <span className="tally-lbl">Particulars / Party A/c</span>
+                <span className="tally-lbl">
+                  {newVoucher.type === 'Sales' ? 'Buyer / Party A/c' : 'Supplier / Party A/c'}
+                </span>
                 <span className="tally-colon">:</span>
                 <div className="tally-input-wrap" style={{ flexDirection: 'column', alignItems: 'stretch' }}>
                   <input
                     type="text"
                     list="ledger-party-options"
                     className="tally-field"
-                    placeholder="Select or type party ledger (e.g. Oceanic Marine Exports)"
+                    placeholder={`Select or type ${newVoucher.type === 'Sales' ? 'customer/debtor' : 'supplier/creditor'} name...`}
                     value={newVoucher.particulars}
                     onChange={(e) => setNewVoucher({ ...newVoucher, particulars: e.target.value })}
                     autoFocus
@@ -1537,7 +1754,9 @@ export default function DashboardPage() {
 
               {/* Offset / Account Selector */}
               <div className="tally-row">
-                <span className="tally-lbl">Account / Offset A/c</span>
+                <span className="tally-lbl">
+                  {newVoucher.type === 'Sales' ? 'Sales Ledger A/c' : 'Purchase Ledger A/c'}
+                </span>
                 <span className="tally-colon">:</span>
                 <div className="tally-input-wrap">
                   <select
@@ -1545,31 +1764,131 @@ export default function DashboardPage() {
                     value={newVoucher.account}
                     onChange={(e) => setNewVoucher({ ...newVoucher, account: e.target.value })}
                   >
-                    {ledgers.map((l) => (
-                      <option key={l.id} value={l.name}>
-                        {l.name} ({l.group})
-                      </option>
-                    ))}
+                    {newVoucher.type === 'Sales' ? (
+                      <>
+                        <option value="Sales Accounts">Sales Accounts</option>
+                        <option value="Direct Incomes">Direct Incomes</option>
+                      </>
+                    ) : (
+                      <>
+                        <option value="Purchase Accounts">Purchase Accounts</option>
+                        <option value="Direct Expenses">Direct Expenses</option>
+                      </>
+                    )}
                   </select>
                 </div>
               </div>
 
-              <div className="tally-row">
-                <span className="tally-lbl">Amount (₹)</span>
-                <span className="tally-colon">:</span>
-                <div className="tally-input-wrap">
-                  <input
-                    type="number"
-                    className="tally-field"
-                    placeholder="0.00"
-                    value={newVoucher.amount}
-                    onChange={(e) => setNewVoucher({ ...newVoucher, amount: e.target.value })}
-                    style={{ fontSize: '1.05rem', color: '#00f0ff', fontWeight: 700 }}
-                  />
+              {/* Stock Items Inventory Section */}
+              <div style={{ marginTop: 18 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
+                  <span style={{ fontSize: '0.84rem', color: '#00f0ff', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                    Stock Items & Quantity Details
+                  </span>
+                  <button
+                    type="button"
+                    className="tally-add-row-btn"
+                    onClick={handleAddItemRow}
+                  >
+                    + Add Item Row
+                  </button>
                 </div>
+
+                <table className="tally-items-table">
+                  <thead>
+                    <tr>
+                      <th style={{ width: '42%' }}>Name of Stock Item</th>
+                      <th style={{ width: '14%', textAlign: 'center' }}>Quantity</th>
+                      <th style={{ width: '12%', textAlign: 'center' }}>UoM</th>
+                      <th style={{ width: '16%', textAlign: 'right' }}>Price / Rate (₹)</th>
+                      <th style={{ width: '16%', textAlign: 'right' }}>Amount (₹)</th>
+                      <th style={{ width: 32, textAlign: 'center' }}></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {newVoucher.items.map((row, idx) => (
+                      <tr key={idx}>
+                        <td>
+                          <input
+                            type="text"
+                            list="stock-items-datalist"
+                            className="tally-table-input"
+                            placeholder="Select or enter item name..."
+                            value={row.itemName}
+                            onChange={(e) => handleItemChange(idx, 'itemName', e.target.value)}
+                          />
+                        </td>
+                        <td>
+                          <input
+                            type="number"
+                            min="1"
+                            className="tally-table-input"
+                            style={{ textAlign: 'center' }}
+                            value={row.quantity}
+                            onChange={(e) => handleItemChange(idx, 'quantity', e.target.value)}
+                          />
+                        </td>
+                        <td>
+                          <input
+                            type="text"
+                            className="tally-table-input"
+                            style={{ textAlign: 'center', color: '#38bdf8' }}
+                            value={row.unit}
+                            onChange={(e) => handleItemChange(idx, 'unit', e.target.value)}
+                            placeholder="Pcs"
+                          />
+                        </td>
+                        <td>
+                          <input
+                            type="number"
+                            className="tally-table-input"
+                            style={{ textAlign: 'right' }}
+                            placeholder="0.00"
+                            value={row.rate}
+                            onChange={(e) => handleItemChange(idx, 'rate', e.target.value)}
+                          />
+                        </td>
+                        <td style={{ textAlign: 'right', fontWeight: 700, color: '#f59e0b', paddingRight: 8 }}>
+                          ₹{(Number(row.amount) || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
+                        </td>
+                        <td style={{ textAlign: 'center' }}>
+                          {newVoucher.items.length > 1 && (
+                            <button
+                              type="button"
+                              className="tally-row-delete-btn"
+                              onClick={() => handleRemoveItemRow(idx)}
+                              title="Remove Row"
+                            >
+                              ✕
+                            </button>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                  <tfoot>
+                    <tr style={{ background: '#081628', borderTop: '2px solid #00f0ff', fontWeight: 800 }}>
+                      <td colSpan={4} style={{ padding: '8px 10px', color: '#00f0ff', letterSpacing: '0.04em' }}>
+                        TOTAL VOUCHER AMOUNT ({newVoucher.items.length} Item{newVoucher.items.length > 1 ? 's' : ''})
+                      </td>
+                      <td style={{ textAlign: 'right', padding: '8px 10px', color: '#4ade80', fontSize: '1.05rem' }}>
+                        ₹{(Number(newVoucher.amount) || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
+                      </td>
+                      <td></td>
+                    </tr>
+                  </tfoot>
+                </table>
+
+                <datalist id="stock-items-datalist">
+                  {items.map((it) => (
+                    <option key={it.id} value={it.name}>
+                      {it.name} (Rate: {it.rate}, Stock: {it.stock})
+                    </option>
+                  ))}
+                </datalist>
               </div>
 
-              <div className="tally-row tally-row-align-top">
+              <div className="tally-row tally-row-align-top" style={{ marginTop: 12 }}>
                 <span className="tally-lbl">Narration</span>
                 <span className="tally-colon">:</span>
                 <div className="tally-input-wrap">
@@ -1630,7 +1949,7 @@ export default function DashboardPage() {
 
             {/* Filter bar */}
             <div className="tally-voucher-bar">
-              {['All', 'Sales', 'Purchase', 'Payment', 'Receipt', 'Contra', 'Journal'].map((f) => (
+              {['All', 'Sales', 'Purchase'].map((f) => (
                 <button
                   key={f}
                   className={`tally-voucher-btn ${voucherFilter === f ? 'active' : ''}`}
@@ -1642,7 +1961,11 @@ export default function DashboardPage() {
               <button
                 className="tally-voucher-btn"
                 style={{ marginLeft: 'auto', background: '#f59e0b', color: '#000', fontWeight: 800 }}
-                onClick={() => setActiveModal('trans_vouchers')}
+                onClick={() => {
+                  setNewVoucher(createBlankVoucher('Sales'));
+                  setShowVoucherAcceptPrompt(false);
+                  setActiveModal('trans_vouchers');
+                }}
               >
                 + Record New Voucher
               </button>
@@ -1654,7 +1977,11 @@ export default function DashboardPage() {
                   <p>No transactions found for filter &quot;{voucherFilter}&quot;.</p>
                   <button
                     className="tally-action-switch"
-                    onClick={() => setActiveModal('trans_vouchers')}
+                    onClick={() => {
+                      setNewVoucher(createBlankVoucher('Sales'));
+                      setShowVoucherAcceptPrompt(false);
+                      setActiveModal('trans_vouchers');
+                    }}
                   >
                     Click here to record a voucher now
                   </button>
@@ -1680,6 +2007,17 @@ export default function DashboardPage() {
                           <td style={{ color: '#94a3b8' }}>{v.date}</td>
                           <td className="tally-td-name">
                             <strong>{v.particulars}</strong>
+                            {v.items && v.items.length > 0 && (
+                              <div style={{ fontSize: '0.78rem', color: '#38bdf8', marginTop: 3 }}>
+                                {v.items
+                                  .filter((it) => it.itemName)
+                                  .map(
+                                    (it) =>
+                                      `${it.itemName} (${it.quantity} ${it.unit || ''} @ ₹${Number(it.rate || 0).toLocaleString('en-IN')})`
+                                  )
+                                  .join(', ')}
+                              </div>
+                            )}
                             <div className="tally-sub-address">{v.narration}</div>
                           </td>
                           <td>
@@ -1738,6 +2076,234 @@ export default function DashboardPage() {
                 className="tally-btn-secondary"
                 onClick={() => setActiveModal(null)}
               >
+                Done
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 5.5 TRANSACTIONS: LEDGER STATEMENT SCREEN */}
+      {activeModal === 'trans_ledger' && (
+        <div className="tally-modal-backdrop" onClick={() => setActiveModal(null)}>
+          <div className="tally-modal-box" style={{ maxWidth: 1050 }} onClick={(e) => e.stopPropagation()}>
+            <div className="tally-modal-header">
+              <div className="tally-modal-title">
+                <span className="tally-badge">Ledger Vouchers</span>
+                <span>
+                  Ledger Statement: {activeLedgerObj ? activeLedgerObj.name : 'Ledger Account'} ({companyInfo.name})
+                </span>
+              </div>
+              <button className="tally-modal-close-btn" onClick={() => setActiveModal(null)}>
+                Esc: Close
+              </button>
+            </div>
+
+            {/* Top Toolbar: Ledger Selector & Action Buttons */}
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 12,
+                padding: '10px 18px',
+                background: '#040b17',
+                borderBottom: '1px solid #142a45',
+                flexWrap: 'wrap',
+              }}
+            >
+              <span className="tally-lbl" style={{ minWidth: 'auto', fontWeight: 700, color: '#00f0ff' }}>
+                Select Ledger:
+              </span>
+              <select
+                className="tally-field tally-select"
+                style={{ minWidth: 280, maxWidth: 380, fontWeight: 700 }}
+                value={activeLedgerObj ? activeLedgerObj.name : ''}
+                onChange={(e) => setSelectedLedgerName(e.target.value)}
+              >
+                {ledgers.map((l) => (
+                  <option key={l.id} value={l.name}>
+                    {l.name} ({l.group})
+                  </option>
+                ))}
+              </select>
+
+              <button
+                className="tally-voucher-btn"
+                style={{ marginLeft: 'auto', background: '#f59e0b', color: '#000', fontWeight: 800 }}
+                onClick={() => {
+                  const fresh = createBlankVoucher(
+                    activeLedgerObj?.group === 'Sundry Creditors' ? 'Purchase' : 'Sales'
+                  );
+                  fresh.particulars = activeLedgerObj?.name || '';
+                  setNewVoucher(fresh);
+                  setShowVoucherAcceptPrompt(false);
+                  setActiveModal('trans_vouchers');
+                }}
+              >
+                + Record Voucher for this Ledger
+              </button>
+
+              <button
+                className="tally-voucher-btn"
+                style={{ background: '#0a1d33', border: '1px solid #00f0ff', color: '#00f0ff', fontWeight: 700 }}
+                onClick={() => {
+                  if (activeLedgerObj) {
+                    setEditingLedger(activeLedgerObj);
+                    setActiveModal('master_alter');
+                  }
+                }}
+              >
+                ✎ Alter Ledger
+              </button>
+            </div>
+
+            {/* Tally Ledger Summary Header Strip */}
+            <div style={{ padding: '12px 18px 0 18px' }}>
+              <div className="tally-ledger-strip">
+                <div className="tally-ledger-strip-col">
+                  <span className="tally-strip-label">Ledger Name</span>
+                  <span className="tally-strip-val highlight">{activeLedgerObj?.name || '-'}</span>
+                </div>
+                <div className="tally-ledger-strip-col">
+                  <span className="tally-strip-label">Under Group</span>
+                  <span className="tally-strip-val">{activeLedgerObj?.group || '-'}</span>
+                </div>
+                <div className="tally-ledger-strip-col">
+                  <span className="tally-strip-label">Opening Balance</span>
+                  <span
+                    className="tally-strip-val"
+                    style={{ color: opDrCr === 'Dr' ? '#f87171' : '#4ade80' }}
+                  >
+                    {activeLedgerObj ? formatBalance(opRawBalance, opDrCr) : '₹0.00 Dr'}
+                  </span>
+                </div>
+                <div className="tally-ledger-strip-col">
+                  <span className="tally-strip-label">Period</span>
+                  <span className="tally-strip-val">1-Apr-2026 to 31-Mar-2027</span>
+                </div>
+                <div className="tally-ledger-strip-col">
+                  <span className="tally-strip-label">Closing Balance</span>
+                  <span
+                    className="tally-strip-val highlight"
+                    style={{ color: closingNetDr >= 0 ? '#f87171' : '#4ade80' }}
+                  >
+                    {formatBalance(Math.abs(closingNetDr), closingNetDr >= 0 ? 'Dr' : 'Cr')}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Ledger Vouchers Register Table */}
+            <div className="tally-modal-content" style={{ maxHeight: 380, paddingTop: 4 }}>
+              <table className="tally-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Particulars (Opposite A/c)</th>
+                    <th>Vch Type</th>
+                    <th>Vch No.</th>
+                    <th style={{ textAlign: 'right' }}>Debit (₹)</th>
+                    <th style={{ textAlign: 'right' }}>Credit (₹)</th>
+                    <th style={{ textAlign: 'right' }}>Cumulative Bal</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {/* Opening Balance Row */}
+                  <tr className="tally-table-row" style={{ background: 'rgba(2, 6, 23, 0.4)' }}>
+                    <td style={{ color: '#94a3b8' }}>01-Apr-2026</td>
+                    <td className="tally-td-name">
+                      <strong style={{ color: '#94a3b8' }}>Opening Balance (B/F)</strong>
+                      <div className="tally-sub-address">Initial balance brought forward</div>
+                    </td>
+                    <td>-</td>
+                    <td className="tally-td-mono">-</td>
+                    <td style={{ textAlign: 'right', fontWeight: 700, color: opDrCr === 'Dr' ? '#f87171' : '#64748b' }}>
+                      {opDrCr === 'Dr' && opRawBalance > 0
+                        ? opRawBalance.toLocaleString('en-IN', { minimumFractionDigits: 2 })
+                        : '-'}
+                    </td>
+                    <td style={{ textAlign: 'right', fontWeight: 700, color: opDrCr === 'Cr' ? '#4ade80' : '#64748b' }}>
+                      {opDrCr === 'Cr' && opRawBalance > 0
+                        ? opRawBalance.toLocaleString('en-IN', { minimumFractionDigits: 2 })
+                        : '-'}
+                    </td>
+                    <td style={{ textAlign: 'right', fontWeight: 700, color: opDrCr === 'Dr' ? '#f87171' : '#4ade80' }}>
+                      {formatBalance(opRawBalance, opDrCr)}
+                    </td>
+                  </tr>
+
+                  {/* Transaction Entries */}
+                  {ledgerStatementEntries.length === 0 ? (
+                    <tr>
+                      <td colSpan={7} style={{ textAlign: 'center', padding: '24px 10px', color: '#64748b' }}>
+                        No transactions recorded for this ledger in the current accounting period.
+                      </td>
+                    </tr>
+                  ) : (
+                    ledgerStatementEntries.map((v) => {
+                      const typeClass = `tally-badge-${v.type.toLowerCase()}`;
+                      return (
+                        <tr key={v.id} className="tally-table-row">
+                          <td style={{ color: '#94a3b8' }}>{v.date}</td>
+                          <td className="tally-td-name">
+                            <strong>{v.opposingAccount}</strong>
+                            {v.items && v.items.length > 0 && (
+                              <div style={{ fontSize: '0.78rem', color: '#38bdf8', marginTop: 2 }}>
+                                {v.items
+                                  .filter((it) => it.itemName)
+                                  .map(
+                                    (it) =>
+                                      `${it.itemName} (${it.quantity} ${it.unit || ''} @ ₹${Number(it.rate || 0).toLocaleString('en-IN')})`
+                                  )
+                                  .join(', ')}
+                              </div>
+                            )}
+                            <div className="tally-sub-address">{v.narration}</div>
+                          </td>
+                          <td>
+                            <span className={`tally-badge-voucher ${typeClass}`}>
+                              {v.type}
+                            </span>
+                          </td>
+                          <td className="tally-td-mono">{v.voucherNo}</td>
+                          <td style={{ textAlign: 'right', fontWeight: 700, color: v.debit > 0 ? '#f87171' : '#64748b' }}>
+                            {v.debit > 0 ? Number(v.debit).toLocaleString('en-IN', { minimumFractionDigits: 2 }) : '-'}
+                          </td>
+                          <td style={{ textAlign: 'right', fontWeight: 700, color: v.credit > 0 ? '#4ade80' : '#64748b' }}>
+                            {v.credit > 0 ? Number(v.credit).toLocaleString('en-IN', { minimumFractionDigits: 2 }) : '-'}
+                          </td>
+                          <td style={{ textAlign: 'right', fontWeight: 700, color: '#38bdf8' }}>
+                            {v.runningBalanceStr}
+                          </td>
+                        </tr>
+                      );
+                    })
+                  )}
+                </tbody>
+                <tfoot>
+                  <tr className="tally-totals-row">
+                    <td colSpan={4} style={{ padding: '10px 16px', letterSpacing: '0.04em' }}>
+                      PERIOD TOTALS ({ledgerStatementEntries.length} Voucher{ledgerStatementEntries.length !== 1 ? 's' : ''})
+                    </td>
+                    <td style={{ textAlign: 'right', padding: '10px 16px', color: '#f87171' }}>
+                      ₹{totalLedgerDebit.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
+                    </td>
+                    <td style={{ textAlign: 'right', padding: '10px 16px', color: '#4ade80' }}>
+                      ₹{totalLedgerCredit.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
+                    </td>
+                    <td style={{ textAlign: 'right', padding: '10px 16px', color: closingNetDr >= 0 ? '#f87171' : '#4ade80', fontWeight: 800 }}>
+                      {formatBalance(Math.abs(closingNetDr), closingNetDr >= 0 ? 'Dr' : 'Cr')}
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+
+            <div className="tally-footer-bar">
+              <span className="tally-hint">
+                Closing Balance: <strong>{formatBalance(Math.abs(closingNetDr), closingNetDr >= 0 ? 'Dr' : 'Cr')}</strong> | Press Esc to close
+              </span>
+              <button className="tally-btn-secondary" onClick={() => setActiveModal(null)}>
                 Done
               </button>
             </div>
