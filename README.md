@@ -1,8 +1,10 @@
 <div align="center">
   <!-- Note: Please ensure your logo images are placed in the public folder and update the src paths if necessary -->
-  <img src="./public/sih-logo.png" alt="Smart India Hackathon" height="120" />
+  <img width="242" height="114" alt="Screenshot 2026-09-09 170032" src="https://github.com/user-attachments/assets/a957d947-76db-46e3-a481-b48a646e2761" />
+
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="./public/sea-syntax-logo.png" alt="Sea & Syntax Logo" height="120" />
+  <img width="242" height="242" alt="WhatsApp Image 2026-09-07 at 17 11 43" src="https://github.com/user-attachments/assets/44e45784-9083-480a-bd7c-8d3568178152" />
+
   <br/><br/>
   
   <h1>⚓ Sea & Syntax</h1>
@@ -51,10 +53,12 @@ Our system dynamically evaluates vessel telemetry, port congestion data, and rou
 **Team Name:** Sea & Syntax  
 **Institution:** Guru Tegh Bahadur 4th Centenary Engineering College
 
-- **Sumit Sharma** - Team Lead & AI Predictive Analytics
-- **Aarav Kapoor** - Full-Stack System Architect
-- **Rohan Verma** - Vessel Charter Algorithm Lead
-- **Priya Nair** - Terminal Feeds & UI/UX Design
+- **Nitika Rathi** - Team Lead and Solution Architecture
+- **Khushi Taliyan** - Research and AI Analytics
+- **Piyush Chopra** - UI/UX and Frontend 
+- **Saanvi Satish** - UI/UX and Research
+- **Yakshita Arora** - Terminal Feeds & UI/UX Design
+- **Akash Kumar Sharma** - AI predictive and Full Stack arrangement 
 
 ---
 
