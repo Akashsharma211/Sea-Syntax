@@ -62,7 +62,7 @@ const UserSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-    fssai: {
+    IEC: {
       type: String,
       required: true,
       trim: true,

@@ -20,16 +20,16 @@ export async function POST(request) {
       email,
       website,
       gst,
-      fssai,
+      IEC,
       finYear,
       booksBegin,
       currency,
       formalName,
     } = body;
 
-    if (!name || !address || !gst || !fssai || !phone) {
+    if (!name || !address || !gst || !IEC || !phone) {
       return NextResponse.json(
-        { success: false, error: 'Name, Address, GST, FSSAI, and Phone number are required.' },
+        { success: false, error: 'Name, Address, GST, IEC, and Phone number are required.' },
         { status: 400 }
       );
     }
@@ -49,7 +49,7 @@ export async function POST(request) {
       email: email || '',
       website: website || '',
       gst,
-      fssai,
+      IEC,
       finYear: finYear || '1-Apr-2026',
       booksBegin: booksBegin || '1-Apr-2026',
       currency: currency || '₹',

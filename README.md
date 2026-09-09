@@ -1,6 +1,6 @@
 # 🌊 MarineMetrics — Sea & Syntax
 
-> **Autonomous Ocean Intelligence & Telemetry Platform with Integrated Tally Prime ERP Accounting Engine**  
+> **Autonomous Ocean Intelligence & Telemetry Platform with Integrated Marine Matrice ERP ERP Accounting Engine**  
 > *Developed by Team Sea & Syntax for the Smart India Hackathon (SIH).*
 
 ---
@@ -29,7 +29,7 @@
 
 **MarineMetrics** is a hybrid platform uniting two major systems:
 1. **Marine Intelligence & Telemetry Portal**: A bioluminescent, cyber-oceanic web experience highlighting ocean health analytics, real-time coastal telemetry, illegal fishing prevention, and microplastic tracking.
-2. **Tally Prime ERP Accounting Engine**: A modern, high-fidelity browser implementation of Tally Prime's ERP interface for marine enterprises, complete with Gateway of Tally navigation, multi-voucher accounting (Sales, Purchase, Payment, Receipt, Journal, Contra), Day Book, Balance Sheet, Profit & Loss, Inventory Stock Summary, Ratio Analysis, and Ledger Statements.
+2. **Marine Matrice ERP ERP Accounting Engine**: A modern, high-fidelity browser implementation of Marine Matrice ERP's ERP interface for marine enterprises, complete with Gateway of Marine Matrice navigation, multi-voucher accounting (Sales, Purchase, Payment, Receipt, Journal, Contra), Day Book, Balance Sheet, Profit & Loss, Inventory Stock Summary, Ratio Analysis, and Ledger Statements.
 
 ---
 
@@ -53,7 +53,7 @@
 | **Custom Vanilla CSS3 Design System** | Engineered with modern CSS custom properties (variables) across `app/globals.css` (~75 KB) and `styles.css` (~35 KB). Provides full design autonomy without heavy CSS framework runtime overhead. |
 | **Bioluminescent Oceanic Aesthetic** | Custom color grading featuring deep abyssal tones (`#020710`, `#050c18`, `#0a192f`), neon cyan accents (`#00f0ff`), and emerald plankton highlights (`#00ffaa`). |
 | **Glassmorphism & Cyber UI** | Utilizes CSS `backdrop-filter: blur()`, multi-layered glowing drop-shadows, scanline gradients, and semi-transparent dark borders (`rgba(0, 240, 255, 0.15)`). |
-| **Tally Prime ERP Interface** | Accurate replication of Tally Prime's dual-panel ERP workstation: header quick-actions, Gateway menu tree with shortcut keys, split-pane accounting ledger registers, voucher tables, and modal overlay workflows. |
+| **Marine Matrice ERP ERP Interface** | Accurate replication of Marine Matrice ERP's dual-panel ERP workstation: header quick-actions, Gateway menu tree with shortcut keys, split-pane accounting ledger registers, voucher tables, and modal overlay workflows. |
 | **Responsive Grid & Flexbox Layouts** | Fluid multi-breakpoint layout adapting from desktop 4K/1080p monitors down to tablet and mobile screens. |
 | **Embedded SVG Vector Icons** | Handcrafted, resolution-independent inline SVG iconography for zero network overhead and crisp rendering at any DPI. |
 
@@ -72,7 +72,7 @@
 
 | Technology / API Route | File Location | Method | Purpose & Implementation Details |
 | :--- | :--- | :--- | :--- |
-| **Next.js Serverless Route Handlers** | [`app/api/user/route.js`](file:///c:/Users/ADMIN/Downloads/sea&syntax/app/api/user/route.js) | `POST` | Accepts company onboarding registration payload, executes schema validation (Company Name, Address, GST, FSSAI, Phone), and writes record to MongoDB Atlas. |
+| **Next.js Serverless Route Handlers** | [`app/api/user/route.js`](file:///c:/Users/ADMIN/Downloads/sea&syntax/app/api/user/route.js) | `POST` | Accepts company onboarding registration payload, executes schema validation (Company Name, Address, GST, IEC, Phone), and writes record to MongoDB Atlas. |
 | **Dynamic Data Retrieval** | [`app/api/user/route.js`](file:///c:/Users/ADMIN/Downloads/sea&syntax/app/api/user/route.js) | `GET` | Handles single company retrieval via `?id=` query parameter or lists all registered companies sorted by creation timestamp (`createdAt: -1`). |
 | **Dynamic Route Configuration** | `app/api/user/route.js` | N/A | Decorated with `export const dynamic = 'force-dynamic'` to prevent stale cache returns on cloud edge networks. |
 
@@ -85,7 +85,7 @@
 | **MongoDB Atlas** | Cloud NoSQL | Scalable, document-based cloud database cluster storing company profiles, regulatory IDs, and financial configurations. |
 | **Mongoose** | `^9.9.5` | ODM (Object Data Modeling) library providing schema definition, type safety, default attributes, and sanitization. |
 | **Serverless Connection Caching** | [`lib/mongodb.js`](file:///c:/Users/ADMIN/Downloads/sea&syntax/lib/mongodb.js) | Employs a cached global mongoose singleton pattern (`global.mongoose = { conn, promise }`). Reuses active TCP connections across warm serverless function invocations on Vercel/AWS to avoid connection pool starvation. |
-| **Data Models** | [`models/User.js`](file:///c:/Users/ADMIN/Downloads/sea&syntax/models/User.js) | Comprehensive schema supporting Company Name, Mailing Name, Address, State, Country, Pincode, Phone, GSTIN, FSSAI Number, Financial Year start, Books Beginning date, and Currency symbol. |
+| **Data Models** | [`models/User.js`](file:///c:/Users/ADMIN/Downloads/sea&syntax/models/User.js) | Comprehensive schema supporting Company Name, Mailing Name, Address, State, Country, Pincode, Phone, GSTIN, IEC Number, Financial Year start, Books Beginning date, and Currency symbol. |
 
 ---
 
@@ -118,7 +118,7 @@
                                   |            CLIENT BROWSER             |
                                   +---------------------------------------+
                                     |                 |                 |
-                   (HTML5 Canvas)   |                 |                 |  (Tally ERP & Forms)
+                   (HTML5 Canvas)   |                 |                 |  (Marine Matrice ERP & Forms)
                                     v                 |                 v
                          +--------------------+       |       +--------------------+
                          |  OceanCanvas 2D    |       |       |  Next.js 14 Client |
@@ -166,9 +166,9 @@ sea&syntax/
 │   │   └── user/
 │   │       └── route.js              # GET & POST endpoints for Company & User records
 │   ├── create/                       # Company Creation & Master Setup Route
-│   │   └── page.js                   # Form with validation (GST, FSSAI, Phone) & MongoDB sync
-│   ├── dashboard/                    # Full Tally Prime ERP Web Application
-│   │   └── page.js                   # Gateway of Tally, Vouchers, Masters, Reports, Day Book
+│   │   └── page.js                   # Form with validation (GST, IEC, Phone) & MongoDB sync
+│   ├── dashboard/                    # Full Marine Matrice ERP ERP Web Application
+│   │   └── page.js                   # Gateway of Marine Matrice, Vouchers, Masters, Reports, Day Book
 │   ├── globals.css                   # Main application design system & CSS variables (75 KB)
 │   ├── layout.js                     # Root layout with SEO metadata & dynamic SVG favicon
 │   └── page.js                       # Home landing page assembling portal sections
@@ -210,12 +210,12 @@ sea&syntax/
 - **Instant Launch**: Direct navigation gateway into company setup and ERP operations.
 
 ### 2. Company Setup & Master Registration (`/create`)
-- **Statutory Compliances**: Inputs and sanitization for **GSTIN** and **FSSAI** numbers.
+- **Statutory Compliances**: Inputs and sanitization for **GSTIN** and **IEC** numbers.
 - **Dual Mode**: Register a new enterprise or inspect existing companies fetched directly from MongoDB Atlas.
-- **Tally Acceptance Dialogue**: Realistic "Accept? (Yes/No)" confirmation prompt mirroring ERP operations.
+- **Marine Matrice Acceptance Dialogue**: Realistic "Accept? (Yes/No)" confirmation prompt mirroring ERP operations.
 
-### 3. Tally Prime ERP Workstation (`/dashboard`)
-- **Gateway of Tally**: Keyboard-navigable menu tree (Masters, Transactions, Utilities, Reports).
+### 3. Marine Matrice ERP ERP Workstation (`/dashboard`)
+- **Gateway of Marine Matrice**: Keyboard-navigable menu tree (Masters, Transactions, Utilities, Reports).
 - **Accounting Vouchers**: Creation and filtering for Sales (`INV`), Purchase (`PUR`), Payment, Receipt, Journal, and Contra vouchers.
 - **Financial Statements**: Real-time calculated **Balance Sheet** and **Profit & Loss Account** with automatic balance matching.
 - **Inventory & Stock Summary**: Real-time stock registers with unit quantities, valuation rates, and closing balances.
@@ -270,7 +270,7 @@ MONGODB_URI=mongodb+srv://<username>:<password>@<cluster-url>/<database-name>?re
    Navigate to [http://localhost:3000](http://localhost:3000) to view the portal.
    - Landing Page: `http://localhost:3000`
    - Company Registration: `http://localhost:3000/create`
-   - Tally Prime ERP Dashboard: `http://localhost:3000/dashboard`
+   - Marine Matrice ERP ERP Dashboard: `http://localhost:3000/dashboard`
 
 ---
 

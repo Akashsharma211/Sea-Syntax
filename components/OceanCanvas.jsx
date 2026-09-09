@@ -14,6 +14,7 @@ export default function OceanCanvas() {
     let height = (canvas.height = window.innerHeight);
 
     const handleResize = () => {
+      if (!canvas) return;
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
     };
@@ -21,18 +22,19 @@ export default function OceanCanvas() {
     window.addEventListener('resize', handleResize);
 
     const particles = [];
-    const particleCount = Math.min(Math.floor(width / 20), 75);
+    const particleCount = Math.min(Math.floor(width / 24), 50);
 
     for (let i = 0; i < particleCount; i++) {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        radius: Math.random() * 2.2 + 0.8,
-        speedX: (Math.random() - 0.5) * 0.4,
-        speedY: -Math.random() * 0.6 - 0.2, // Upward plankton motion
-        hue: Math.random() > 0.4 ? 185 : 160,
-        opacity: Math.random() * 0.6 + 0.2,
-        pulseSpeed: Math.random() * 0.03 + 0.01,
+        radius: Math.random() * 2.0 + 0.8,
+        speedX: (Math.random() - 0.5) * 0.35,
+        speedY: -Math.random() * 0.5 - 0.15,
+        // Harmonic violet/purple & deep cyan hues matching the SaveMyExams aesthetic
+        hue: Math.random() > 0.4 ? 268 : 195,
+        opacity: Math.random() * 0.4 + 0.15,
+        pulseSpeed: Math.random() * 0.025 + 0.01,
         pulseAngle: Math.random() * Math.PI * 2,
       });
     }
@@ -42,33 +44,33 @@ export default function OceanCanvas() {
     function render() {
       ctx.clearRect(0, 0, width, height);
 
-      // Subtle ambient ocean wave
-      const time = Date.now() * 0.001;
+      // Subtle ambient violet glow curve
+      const time = Date.now() * 0.0008;
       ctx.beginPath();
-      ctx.strokeStyle = 'rgba(0, 240, 255, 0.04)';
-      ctx.lineWidth = 2;
-      for (let x = 0; x < width; x += 15) {
+      ctx.strokeStyle = 'rgba(139, 92, 246, 0.04)';
+      ctx.lineWidth = 1.5;
+      for (let x = 0; x < width; x += 20) {
         const y =
-          height * 0.85 +
-          Math.sin(x * 0.005 + time) * 35 +
-          Math.cos(x * 0.002 + time * 0.8) * 20;
+          height * 0.88 +
+          Math.sin(x * 0.004 + time) * 28 +
+          Math.cos(x * 0.0018 + time * 0.7) * 15;
         if (x === 0) ctx.moveTo(x, y);
         else ctx.lineTo(x, y);
       }
       ctx.stroke();
 
-      // Bioluminescent particles
+      // Ambient particles
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
         p.pulseAngle += p.pulseSpeed;
         const currentOpacity =
-          p.opacity * (0.65 + 0.35 * Math.sin(p.pulseAngle));
+          p.opacity * (0.7 + 0.3 * Math.sin(p.pulseAngle));
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `hsla(${p.hue}, 100%, 65%, ${currentOpacity})`;
-        ctx.shadowBlur = 12;
-        ctx.shadowColor = `hsla(${p.hue}, 100%, 55%, 0.8)`;
+        ctx.fillStyle = `hsla(${p.hue}, 90%, 65%, ${currentOpacity})`;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = `hsla(${p.hue}, 90%, 60%, 0.6)`;
         ctx.fill();
         ctx.shadowBlur = 0;
 
@@ -87,14 +89,14 @@ export default function OceanCanvas() {
           const dx = p.x - p2.x;
           const dy = p.y - p2.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 110) {
+          if (dist < 100) {
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(0, 240, 255, ${
-              0.12 * (1 - dist / 110)
+            ctx.strokeStyle = `rgba(139, 92, 246, ${
+              0.08 * (1 - dist / 100)
             })`;
-            ctx.lineWidth = 0.8;
+            ctx.lineWidth = 0.6;
             ctx.stroke();
           }
         }
