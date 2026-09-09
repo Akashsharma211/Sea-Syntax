@@ -1,7 +1,6 @@
 'use client';
 
 import OceanCanvas from '@/components/OceanCanvas';
-import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
 import ProblemSection from '@/components/ProblemSection';
 import SolutionSection from '@/components/SolutionSection';
@@ -13,9 +12,6 @@ export default function Home() {
     <>
       {/* Background bioluminescent plankton & wave canvas */}
       <OceanCanvas />
-
-      {/* Navigation Bar with single Start button */}
-      <Navbar />
 
       <main>
         {/* Hero Section with single Start button */}

@@ -4,35 +4,21 @@ import Link from 'next/link';
 
 export default function Footer() {
   return (
-    <footer className="sme-footer" id="footer">
+    <footer className="sme-footer" id="footer" style={{ backgroundColor: '#0f172a' }}>
       <div className="container">
         <div className="sme-footer-grid">
           {/* Brand Column */}
           <div className="sme-footer-brand">
-            <div className="sme-footer-logo-row">
-              <div className="sme-brand-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2.2"
-                    d="M13 10V3L4 14h7v7l9-11h-7z"
-                    fill="url(#footGrad)"
-                  />
-                  <defs>
-                    <linearGradient id="footGrad" x1="0" y1="0" x2="1" y2="1">
-                      <stop offset="0%" stopColor="#a855f7" />
-                      <stop offset="100%" stopColor="#38bdf8" />
-                    </linearGradient>
-                  </defs>
-                </svg>
+            <div className="sme-footer-logo-row" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <div className="sme-brand-icon" style={{ width: '40px', height: '40px', overflow: 'hidden', borderRadius: '50%' }}>
+                <img src="/seaandsyntaxlogo.png" alt="Sea & Syntax" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
-              <h3 className="sme-footer-brand-title">MarineMetrics</h3>
+              <h3 className="sme-footer-brand-title" style={{ color: '#fff', margin: 0 }}>MarineMetrics</h3>
             </div>
-            <p className="sme-footer-desc">
+            <p className="sme-footer-desc" style={{ color: '#cbd5e1' }}>
               Autonomous Ocean Intelligence and Coastal Defense platform designed to monitor maritime ecosystems, detect illegal fishing, and safeguard India&apos;s blue economy.
             </p>
-            <div className="sme-footer-team-callout">
+            <div className="sme-footer-team-callout" style={{ color: '#94a3b8' }}>
               <span>
                 Engineering Team: <strong>Sea &amp; Syntax</strong>
               </span>
@@ -41,31 +27,31 @@ export default function Footer() {
 
           {/* Navigation */}
           <div className="sme-footer-col">
-            <h4>Navigation</h4>
+            <h4 style={{ color: '#fff' }}>Navigation</h4>
             <ul className="sme-footer-links">
-              <li><a href="#hero">Overview</a></li>
-              <li><a href="#problem">Problem Statement</a></li>
-              <li><a href="#solution">Provided Solution</a></li>
-              <li><a href="#team">Team Members</a></li>
-              <li><Link href="/create">Launch Platform</Link></li>
+              <li><a href="#hero" style={{ color: '#cbd5e1' }}>Overview</a></li>
+              <li><a href="#problem" style={{ color: '#cbd5e1' }}>Problem Statement</a></li>
+              <li><a href="#solution" style={{ color: '#cbd5e1' }}>Provided Solution</a></li>
+              <li><a href="#team" style={{ color: '#cbd5e1' }}>Team Members</a></li>
+              <li><Link href="/create" style={{ color: '#cbd5e1' }}>Launch Platform</Link></li>
             </ul>
           </div>
 
           {/* Hackathon Scope */}
           <div className="sme-footer-col">
-            <h4>Hackathon Scope</h4>
+            <h4 style={{ color: '#fff' }}>Hackathon Scope</h4>
             <ul className="sme-footer-links">
-              <li><a href="#hero">Smart India Hackathon</a></li>
-              <li><a href="#problem">Ministry of Earth Sciences</a></li>
-              <li><a href="#solution">Coastal Security</a></li>
-              <li><a href="#solution">Blue Economy Mission</a></li>
-              <li><a href="#team">Sea &amp; Syntax Lab</a></li>
+              <li><a href="#hero" style={{ color: '#cbd5e1' }}>Smart India Hackathon</a></li>
+              <li><a href="#problem" style={{ color: '#cbd5e1' }}>Ministry of Earth Sciences</a></li>
+              <li><a href="#solution" style={{ color: '#cbd5e1' }}>Coastal Security</a></li>
+              <li><a href="#solution" style={{ color: '#cbd5e1' }}>Blue Economy Mission</a></li>
+              <li><a href="#team" style={{ color: '#cbd5e1' }}>Sea &amp; Syntax Lab</a></li>
             </ul>
           </div>
 
           {/* System Status */}
           <div className="sme-footer-col">
-            <h4>System Status</h4>
+            <h4 style={{ color: '#fff' }}>System Status</h4>
             <ul className="sme-footer-links">
               <li>
                 <span className="status-indicator online" />
@@ -87,34 +73,38 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Dedicated Credit Bar */}
-        <div className="sme-footer-credit-bar">
-          <div className="sme-credit-main">
-            <span>Made with 💜 by team</span>
-            <span className="sme-credit-pill">Sea &amp; Syntax</span>
-          </div>
+        {/* Massive THANK YOU */}
+        <div style={{ marginTop: '5rem', marginBottom: '2rem', textAlign: 'center', whiteSpace: 'nowrap', overflow: 'hidden' }}>
+          <h1 style={{
+            fontSize: 'clamp(4rem, 15vw, 20rem)',
+            fontWeight: '900',
+            fontFamily: 'Impact, "Arial Black", sans-serif',
+            margin: 0,
+            lineHeight: 1,
+            letterSpacing: '0.05em',
+            textTransform: 'uppercase',
+            color: '#e9d5ff',
+            textAlign: 'center'
+          }}>
+            THANK YOU
+          </h1>
+        </div>
 
-          <div className="sme-credit-sih">
+        {/* Copyright */}
+        <div className="sme-footer-credit-bar" style={{ borderTop: '1px solid #334155', paddingTop: '1.5rem', justifyContent: 'center' }}>
+          <div className="sme-credit-sih" style={{ color: '#94a3b8' }}>
             <span>Smart India Hackathon • Project MarineMetrics &copy; 2026</span>
           </div>
         </div>
       </div>
 
-      {/* Floating Bottom Right Settings/Theme Button matching Screenshot 2 */}
-      <div className="sme-floating-toggle" title="Theme & Settings">
-        <button type="button" className="sme-floating-btn" aria-label="Settings">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <circle cx="12" cy="12" r="5" />
-            <line x1="12" y1="1" x2="12" y2="3" />
-            <line x1="12" y1="21" x2="12" y2="23" />
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-            <line x1="1" y1="12" x2="3" y2="12" />
-            <line x1="21" y1="12" x2="23" y2="12" />
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-          </svg>
-        </button>
+      {/* Floating Steady Logo */}
+      <div style={{ position: 'fixed', bottom: '20px', right: '20px', zIndex: 9999 }}>
+        <img 
+          src="/seaandsyntaxlogo.png" 
+          alt="Sea & Syntax Logo" 
+          style={{ width: '80px', height: 'auto', borderRadius: '50%', boxShadow: '0 4px 12px rgba(0,0,0,0.5)' }} 
+        />
       </div>
     </footer>
   );

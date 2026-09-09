@@ -2,21 +2,21 @@
 
 export default function ProblemSection() {
   return (
-    <section className="sme-section sme-problem-section" id="problem">
+    <section className="sme-section sme-problem-section" id="problem" style={{ backgroundColor: '#0f172a', color: '#f8fafc', padding: '5rem 0' }}>
       <div className="container">
         {/* Section Header */}
         <div className="sme-section-header">
-          <div className="sme-badge-pill purple">
-            <span className="pulse-indicator" />
+          <div className="sme-badge-pill" style={{ backgroundColor: '#ea580c', color: '#fff', border: 'none' }}>
+            <span className="pulse-indicator" style={{ backgroundColor: '#facc15' }} />
             <span>Problem Statement</span>
           </div>
 
-          <h2 className="sme-section-title">
-            &quot;Development of an Intelligent Freight Forecasting Model for Optimized Vessel Chartering and Bulk Cargo Procurement from overseas to East Coast of India&quot;
+          <h2 className="sme-section-title" style={{ color: '#fff', fontSize: '2.5rem', lineHeight: '1.4', marginTop: '1.5rem', marginBottom: '1.5rem' }}>
+            Development of an Intelligent Freight Forecasting Model for Optimized Vessel Chartering and Bulk Cargo Procurement from overseas to East Coast of India
           </h2>
 
-          <p className="sme-section-subtitle">
-            Navigating volatile global maritime freight indices, erratic spot charter rates, and delayed overseas supply chains heading toward India&apos;s strategic East Coast ports.
+          <p className="sme-section-subtitle" style={{ color: '#cbd5e1', fontSize: '1.25rem', lineHeight: '1.7' }}>
+            Navigating volatile global maritime freight indices, erratic spot charter rates, and delayed overseas supply chains heading toward India's strategic East Coast ports.
           </p>
         </div>
 

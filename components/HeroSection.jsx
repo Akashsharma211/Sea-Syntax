@@ -4,127 +4,83 @@ import Link from 'next/link';
 
 export default function HeroSection() {
   return (
-    <section className="sme-hero-section" id="hero">
-      {/* Decorative Background Doodle Elements (SaveMyExams style) */}
-      <div className="sme-doodle sme-doodle-top-left" aria-hidden="true">
-        <svg viewBox="0 0 160 160" fill="none">
-          <path
-            d="M80 0C85 45 115 75 160 80C115 85 85 115 80 160C75 115 45 85 0 80C45 75 75 45 80 0Z"
-            fill="currentColor"
-          />
-        </svg>
-      </div>
-      <div className="sme-doodle sme-doodle-top-right" aria-hidden="true">
-        <svg viewBox="0 0 200 200" fill="none">
-          <path
-            d="M100 20C120 60 140 80 180 100C140 120 120 140 100 180C80 140 60 120 20 100C60 80 80 60 100 20Z"
-            fill="currentColor"
-          />
-        </svg>
-      </div>
-      <div className="sme-doodle sme-doodle-mid-right" aria-hidden="true">
-        <svg viewBox="0 0 180 180" fill="none">
-          <path
-            d="M90 10C105 50 130 75 170 90C130 105 105 130 90 170C75 130 50 105 10 90C50 75 75 50 90 10Z"
-            fill="currentColor"
-          />
-        </svg>
-      </div>
-      <div className="sme-doodle sme-doodle-bottom-left" aria-hidden="true">
-        <svg viewBox="0 0 150 150" fill="none">
-          <circle cx="75" cy="75" r="50" stroke="currentColor" strokeWidth="8" strokeDasharray="12 12" />
-        </svg>
-      </div>
+    <section className="sme-hero-section relative overflow-hidden" id="hero" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
+      {/* Background Video */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover z-0"
+        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 0 }}
+      >
+        <source src="/webmcargo.webm" type="video/webm" />
+      </video>
 
-      <div className="container">
-        <div className="sme-hero-center">
-          {/* Trustpilot / SIH Verified Badge */}
-          <div className="sme-trust-badge">
-            <span className="sme-trust-label">Excellent</span>
-            <div className="sme-trust-stars" aria-label="5 out of 5 stars">
-              {[...Array(5)].map((_, i) => (
-                <span className="sme-star-box" key={i}>
-                  ★
-                </span>
-              ))}
-            </div>
-            <span className="sme-trust-brand">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--color-trust-green)" style={{ marginRight: 5 }}>
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-              </svg>
+      {/* Dark overlay for better text readability */}
+      <div
+        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.4)', zIndex: 1 }}
+      ></div>
+
+      <div style={{ position: 'relative', zIndex: 2, width: '100%', paddingLeft: '8%', display: 'flex', justifyContent: 'flex-start', marginTop: '-12vh' }}>
+        <div style={{ maxWidth: '900px', textAlign: 'left', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+
+          {/* Top Tagline with Line */}
+          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1.5rem', justifyContent: 'flex-start' }}>
+            <div style={{ width: '60px', height: '1px', backgroundColor: '#fff', marginRight: '20px' }}></div>
+            <span style={{ color: '#fff', letterSpacing: '0.3em', fontSize: '0.85rem', fontWeight: '600', textTransform: 'uppercase' }}>
               SIH 2026 Initiative
             </span>
           </div>
 
-          {/* Hero Main Headline */}
-          <h1 className="sme-hero-title">
-            Development of an Intelligent Freight Forecasting Model for Optimized Vessel Chartering and Bulk Cargo Procurement
-          </h1>
+          {/* Huge Typography Title */}
+          <div style={{
+            fontSize: 'clamp(5rem, 16vw, 13rem)',
+            lineHeight: '0.9',
+            fontWeight: '900',
+            color: '#fff',
+            textTransform: 'uppercase',
+            margin: '0 0 2rem 0',
+            fontFamily: 'Impact, "Arial Black", "Montserrat", sans-serif',
+            textAlign: 'left'
+          }}>
+            <div style={{ letterSpacing: '0.12em' }}>MARINE</div>
+            <div style={{ letterSpacing: '0.02em' }}>METRICS</div>
+          </div>
 
-          {/* Subtitle with Purple Highlight Pill */}
-          <p className="sme-hero-subtitle">
-            Development of an Intelligent Freight Forecasting Model for Optimized Vessel Chartering and Bulk Cargo Procurement{' '}
-            <span className="sme-highlight-pill">from overseas to East Coast of India</span>.
+          {/* Subtitle / Description Paragraph */}
+          <p style={{
+            fontSize: '1.25rem',
+            lineHeight: '1.6',
+            color: '#fff',
+            fontWeight: '500',
+            maxWidth: '650px',
+            marginBottom: '3.5rem',
+            textShadow: '0 2px 4px rgba(0,0,0,0.5)',
+            textAlign: 'left'
+          }}>
+            An advanced ocean data intelligence platform. Optimizing vessel chartering and bulk cargo procurement to navigate the challenges of global maritime logistics.
           </p>
 
-          {/* Dual Action Buttons (Vibrant purple pill & dark pill) */}
-          <div className="sme-hero-btn-group">
-            <Link href="/create" className="sme-btn-primary-purple" id="startBtn">
-              START
+          {/* Solid White Button with Arrow */}
+          <div style={{ textAlign: 'left' }}>
+            <Link href="/create" style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              backgroundColor: '#fff',
+              color: '#000',
+              padding: '1.2rem 3rem',
+              fontWeight: '700',
+              textTransform: 'uppercase',
+              letterSpacing: '0.15em',
+              textDecoration: 'none',
+              fontSize: '0.95rem'
+            }}>
+              START NOW
+              <svg style={{ marginLeft: '12px', width: '20px', height: '20px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
             </Link>
-            <a href="#problem" className="sme-btn-secondary-dark">
-              Explore Problem Statement
-            </a>
-          </div>
-
-          {/* MarineMetrics Visual Telemetry Card */}
-          <div className="sme-hero-media-wrapper">
-            <div className="sme-media-card">
-              <img
-                src="/assets/hero_marine_telemetry.jpg"
-                alt="MarineMetrics Platform"
-                className="sme-hero-image"
-                id="heroGraphic"
-              />
-              <div className="sme-media-badge-left">
-                <span className="live-dot" />
-                <span>East Coast Feeds • Live</span>
-              </div>
-              <div className="sme-media-badge-right">
-                <span>Charter Optimization AI</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Section Transition Heading with Hand-Drawn Squiggle Underline */}
-          <div className="sme-explore-bridge">
-            <h2 className="sme-explore-text">
-              Explore all our{' '}
-              <span className="sme-squiggle-target">
-                resources
-                <svg
-                  className="sme-squiggle-svg"
-                  viewBox="0 0 170 18"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M3 13C32.5 3 61.5 16 93.5 8C117.5 2 142.5 14 167 7"
-                    stroke="#8b5cf6"
-                    strokeWidth="4"
-                    strokeLinecap="round"
-                  />
-                  <path
-                    d="M8 15C39 6.5 68 17 99 9C122 3 146 15 165 9"
-                    stroke="#a855f7"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    opacity="0.8"
-                  />
-                </svg>
-              </span>
-            </h2>
           </div>
         </div>
       </div>
