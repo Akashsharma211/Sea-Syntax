@@ -20,7 +20,7 @@ export default function TeamSection() {
       name: 'Piyush Chopra',
       role: 'UI/UX',
       experience: 'Frontend Engineering',
-      image: '/team/piyush.jpg',
+      image: '/team/piyush.jpeg',
     },
     {
       name: 'Saanvi Satish',
